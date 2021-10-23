@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "279561968229",
+    "project_id": "encryptu-new",
+    "storage_bucket": "encryptu-new.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279561968229:android:de8f6dd910fc55f855048c",
+        "android_client_info": {
+          "package_name": "com.siddhantjaiswal.encryptu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279561968229-6578c0n24l2h8m1iodtmgjpdb11r0jth.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.siddhantjaiswal.encryptu",
+            "certificate_hash": "51bf07265d1e26d630383eec9113985269f3b757"
+          }
+        },
+        {
+          "client_id": "279561968229-3h7ud5n4a6vqdufu25vk6i5iqqj8o6iu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByviXLOfDbZFRG6GIB7L1k4pBxoLXVDTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279561968229-3h7ud5n4a6vqdufu25vk6i5iqqj8o6iu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
