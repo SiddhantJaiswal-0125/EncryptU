@@ -1,14 +1,10 @@
-import 'dart:io';
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:encryptu/CustomDS/fileDS.dart';
-import 'package:encryptu/Helper/FilePicker.dart';
+import 'package:encryptu/Screens/files_screen.dart';
+import 'package:encryptu/Screens/settings_screen.dart';
+import 'package:encryptu/Screens/sharing_screen.dart';
 import 'package:encryptu/Utils/Utility.dart';
-import 'package:encryptu/Utils/firebase_services.dart';
-import 'package:encryptu/Utils/storage_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.user}) : super(key: key);
@@ -18,11 +14,12 @@ class HomeScreen extends StatefulWidget {
   final User user;
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
 
+  late ScreenState currentState;
   fetchDetails() async {
     // user = (await FirebaseAuth.instance.currentUser)!;
-
 
     print("--------------USER META DATA-----------------");
     print(widget.user.metadata);
@@ -34,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void initState() {
     // TODO: implement initState
     fetchDetails();
+    currentState = ScreenState.SHARING;
 
     super.initState();
   }
@@ -51,42 +49,58 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     // print(userData);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home Page"),
-      ),
-      body: Center(
-          child: FlatButton(
-        color: Colors.white,
-        onPressed: () async {
-          // await FirebaseServices().addData(userData);
 
-        },
-        child: Text("PRESS ME"),
-
-      ),
+      // body: Center(
+      //   child: FlatButton(
+      //     color: Colors.white,
+      //     onPressed: () async {
+      //       // await FirebaseServices().addData(userData);
+      //     },
+      //     child: Text("PRESS ME"),
+      //   ),
+      // ),
+      body: currentState == ScreenState.SHARING ? SharingScreen():
+      (currentState == ScreenState.FILES ? FilesScreen():
+          SettingsScreen()
       ),
       bottomNavigationBar: CurvedNavigationBar(
-      backgroundColor: Colors.blueAccent,
-      items: <Widget>[
-        Icon(Icons.add, size: 30),
-        Icon(Icons.list, size: 30),
-        Icon(Icons.compare_arrows, size: 30),
-      ],
-      onTap: (index) {
-        //Handle button tap
-      },
-    ),
+        color: Colors.teal.shade900,
+        backgroundColor: Colors.white,
+        items: <Widget>[
+          Icon(
+            Icons.compare_arrows,
+            size: 30,
+            color: Colors.white,
+          ),
+          Icon(
+           Icons.file_copy_rounded,
+            size: 30,
+            color: Colors.white,
+          ),
+          Icon(
+           Icons.person,
+            size: 30,
+            color: Colors.white,
+          ),
+        ],
+        onTap: (index) {
+          if(index==0)
+            currentState = ScreenState.SHARING;
+          else if(index==1)
+            currentState = ScreenState.FILES;
+          else currentState = ScreenState.SETTINGS;
+          setState(() {
+
+          });
+
+        },
+      ),
     );
   }
 }
 
 
-
-
-
-
-
-
-
-
-
+enum ScreenState
+{
+  SHARING,FILES,SETTINGS,
+}
