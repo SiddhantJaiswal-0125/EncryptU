@@ -20,9 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print(user.uid);
   }
 
-  Map<String, String> userData = {
-    'username': 'Siddhant',
-  };
+
 
   @override
   void initState() {
@@ -33,6 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, String> userData = {
+      'username': 'Siddhant',
+    };
+
+    print(userData);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Home Page"),

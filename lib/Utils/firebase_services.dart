@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 
 class FirebaseServices {
-  var _firestore_instance = FirebaseFirestore.instance;
+  static var _firestore_instance = FirebaseFirestore.instance;
 
   bool isLoggedIn() {
     return FirebaseAuth.instance.currentUser != null;
@@ -13,17 +12,19 @@ class FirebaseServices {
     return await FirebaseAuth.instance.currentUser;
   }
 
-  Future<void> addData( @required  Map<String, String> userData, )  async {
+  Future<void> addData(Map<String, String> userData) async {
+    print("-----------------INSIDE ADD DATA ---------------");
+    print(userData);
+
     if (isLoggedIn()) {
       _firestore_instance
-          .collection("user")
+          .collection('user')
           .add(userData)
+          .then((value) => print("SUCCESS " + value.toString()))
           .catchError((onError) {
-        print(onError);
+        print("CAUGHT ERRORR" + onError);
       });
-
-    }
-    else
+    } else
       print("USER NOT LOGGED IN");
   }
 }
