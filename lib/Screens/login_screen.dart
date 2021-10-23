@@ -37,7 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (authCredential.user != null) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      HomeScreen(user: authCredential.user!)));
         }
       });
     } on FirebaseAuthException catch (e) {
@@ -55,7 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget input1(context) {
     return Column(
       children: [
-
         SizedBox(
           height: 30,
         ),

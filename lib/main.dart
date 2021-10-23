@@ -5,51 +5,50 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-
 }
 
-
 class MyApp extends StatefulWidget {
+
   @override
   _MyAppState createState() => _MyAppState();
-
 }
 
 class _MyAppState extends State<MyApp> {
+  late User user ;
+  fetch() async{
+    user = FirebaseAuth.instance.currentUser!;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   fetch();
+
+  }
   @override
   Widget build(BuildContext context) {
     final _auth = FirebaseAuth.instance;
 
     bool check = false;
-    if(_auth.currentUser==null)
-    {
+    if (_auth.currentUser == null) {
       check = false;
       print("NOt LOGGED IN");
-      setState(() {
-
-      });
-    }
-    else
-    {
+      setState(() {});
+    } else {
       check = true;
       print("Logged in");
-      setState(() {
-
-      });
-
+      setState(() {});
     }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  check? HomeScreen():LoginScreen(),
+      home: check ? HomeScreen(user: user,) : LoginScreen(),
       // home: LoginScreen(),
-
     );
   }
 }
