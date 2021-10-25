@@ -16,6 +16,16 @@ class _SendScreenState extends State<SendScreen> {
   late customDSforFileStorageLink cds;
 
   bool takepassword = false;
+  bool isuploading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    takepassword = false;
+    isuploading = false;
+    password = "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +38,10 @@ class _SendScreenState extends State<SendScreen> {
           GestureDetector(
             onTap: () async {
               File? fi = await FilePickerCustom().pickfiles();
+              isuploading = true;
+              setState(() {});
               cds = await FirebaseServices().uploadFile(fi!);
+              isuploading = false;
               takepassword = true;
               setState(() {});
             },
@@ -40,21 +53,25 @@ class _SendScreenState extends State<SendScreen> {
                 color: Colors.green,
               ),
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "+",
-                      style:
-                          GoogleFonts.abel(fontSize: 50, color: Colors.white),
-                    ),
-                    Text(
-                      "Upload",
-                      style: GoogleFonts.roboto(
-                          fontSize: 20, color: Colors.white70),
-                    ),
-                  ],
-                ),
+                child: isuploading
+                    ? CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "+",
+                            style: GoogleFonts.abel(
+                                fontSize: 50, color: Colors.white),
+                          ),
+                          Text(
+                            "Upload",
+                            style: GoogleFonts.roboto(
+                                fontSize: 20, color: Colors.white70),
+                          ),
+                        ],
+                      ),
               ),
             ),
           ),
@@ -69,6 +86,7 @@ class _SendScreenState extends State<SendScreen> {
             height: 20,
           ),
           TextFormField(
+
             autovalidate: false,
             obscureText: true,
             enabled: takepassword,
@@ -79,13 +97,15 @@ class _SendScreenState extends State<SendScreen> {
               }
             },
           ),
+          SizedBox(height: 20,),
           FlatButton(
+            color: Colors.teal.shade900,
               onPressed: () async {
                 if (cds != null) {
                   FirebaseServices().encryptFile(cds, password);
                 }
               },
-              child: Text("Upload Your File"))
+              child: Text("Upload Your File", style: GoogleFonts.roboto(fontSize: 18,color: Colors.white),))
         ],
       ),
     );
