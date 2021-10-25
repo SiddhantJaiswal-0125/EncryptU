@@ -10,6 +10,7 @@ enum MobileVerificationState {
 }
 
 class LoginScreen extends StatefulWidget {
+  static String id = "LoginScreen";
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }

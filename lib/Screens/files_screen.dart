@@ -4,6 +4,7 @@ import 'package:encryptu/Utils/firebase_services.dart';
 import 'package:flutter/material.dart';
 
 class FilesScreen extends StatefulWidget {
+  static String id = "FilesScreen";
   @override
   _FilesScreenState createState() => _FilesScreenState();
 }

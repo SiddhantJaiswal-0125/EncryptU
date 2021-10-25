@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:encryptu/CustomDS/fileDS.dart';
+import 'package:encryptu/CustomDS/userDS.dart';
+import 'package:encryptu/Utils/storage_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseServices {
@@ -13,10 +17,16 @@ class FirebaseServices {
     return await FirebaseAuth.instance.currentUser;
   }
 
-
-
-  Future<void> addUserData(Map<String, String> userData) async {
+  Future<void> addUserData(UserDetails userDetails) async {
     print("-----------------INSIDE ADD DATA ---------------");
+
+    Map<String, String> userData = {
+      'name': userDetails.name,
+      'email': userDetails.emailId,
+      'address': userDetails.address,
+      'phoneNo': userDetails.phoneNumber,
+      'profile': userDetails.photoUrl,
+    };
     print(userData);
 
     if (isLoggedIn()) {
@@ -35,38 +45,12 @@ class FirebaseServices {
       print("USER NOT LOGGED IN");
   }
 
-
-  //helps to get the data by id
-  getFilesById(String id) {
-   List<FileStructure>fi = [] ;
-    id = "330146681";
-
-    return _firestore_instance
-        .collection('files')
-        .where('fileId', isEqualTo: id)
-        .where('show', isEqualTo: true)
-        .get().then((QuerySnapshot querySnapshot) {
-          if(querySnapshot !=null)
-            {
-              querySnapshot.docs.forEach((element) {
-                FileStructure f ;
-                String url = element['fileURL'];
-                String password = element['password'];
-                String owner = element['owner'];
-
-                f = new FileStructure(url,id , password, owner);
-                fi.add(f);
-              });
-
-              return fi;
-            }
-          else print("FILE QUERY IS NULL");
-
-    });
-
+  Future<void> uploadFile(File fi) async {
+    customDSforFileStorageLink cds;
+    cds = (await Storage_Services.upload(fi))!;
   }
 
-  Future<void> addFileData(FileStructure fs) async {
+  Future<void> _addFileData(FileStructure fs) async {
     print("-----------------INSIDE addFileToFirestore  ---------------");
     // print(userData);
 
@@ -93,6 +77,34 @@ class FirebaseServices {
       print("USER NOT LOGGED IN");
   }
 
+  //helps to get the data by id
+  getFilesById(String id) {
+    List<FileStructure> fi = [];
+    id = "330146681";
+
+    return _firestore_instance
+        .collection('files')
+        .where('fileId', isEqualTo: id)
+        .where('show', isEqualTo: true)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot != null) {
+        querySnapshot.docs.forEach((element) {
+          FileStructure f;
+          String url = element['fileURL'];
+          String password = element['password'];
+          String owner = element['owner'];
+
+          f = new FileStructure(url, id, password, owner);
+          fi.add(f);
+        });
+
+        return fi;
+      } else
+        print("FILE QUERY IS NULL");
+    });
+  }
+
   getUserData() async {
     _firestore_instance
         .collection('user')
@@ -107,4 +119,13 @@ class FirebaseServices {
         print("QUERY SNAPSHOT IS NULL");
     });
   }
+
+  Future<bool> userExists(String username) async =>
+      (await _firestore_instance
+              .collection("user")
+              .where("username", isEqualTo: username)
+              .get())
+          .docs
+          .length >
+      0;
 }
