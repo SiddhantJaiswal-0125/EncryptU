@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'VerifyPhone.dart';
@@ -9,162 +10,221 @@ class ContinueWithPhone extends StatefulWidget {
 
 class _ContinueWithPhoneState extends State<ContinueWithPhone> {
   String phoneNumber = "";
+  bool showLoading = true;
+  final GlobalKey<ScaffoldState>? _scaffoldKey = GlobalKey();
+  String verificationID = "";
+
+  final _auth = FirebaseAuth.instance;
+
+  VerifyNumber() async {
+    phoneNumber = "+91" + phoneNumber;
+    print("PhoneNUmber is " + phoneNumber);
+
+    _auth.verifyPhoneNumber(
+        // timeout: Duration(seconds: 25),
+        phoneNumber: "+91" + phoneNumber,
+        verificationCompleted: (phoneAuthCredential) async {
+          setState(() {
+            showLoading = false;
+          });
+          // SignInWithPhoneAuthCredential(phoneAuthCredential);
+        },
+        verificationFailed: (verificationFailed) async {
+          setState(() {
+            showLoading = false;
+          });
+          _scaffoldKey!.currentState!.showSnackBar(SnackBar(
+              content: Text(
+            verificationFailed.message.toString(),
+            style: TextStyle(color: Colors.red),
+          )));
+        },
+        codeSent: (verificationId, resendingToken) async {
+          setState(() {
+            showLoading = false;
+          });
+          print("CODE SENT");
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => VerifyPhone(
+                        phoneNumber1: phoneNumber,
+                        verificationId: verificationID,
+                      )));
+
+          setState(() {
+            showLoading = false;
+            print("VERIFICATION ID SAVED " + verificationId);
+            this.verificationID = verificationId;
+          });
+        },
+        codeAutoRetrievalTimeout: (verificationId) async {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          Icons.close,
-          size: 30,
-          color: Colors.black,
-        ),
-        title: Text(
-          "Continue with phone",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        textTheme: Theme.of(context).textTheme,
-      ),
-      body: SafeArea(
-          child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFFFFFFFF),
-                    Color(0xFFF7F7F7),
-                  ],
+    return showLoading == false
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+              leading: Icon(
+                Icons.close,
+                size: 30,
+                color: Colors.black,
+              ),
+              title: Text(
+                "Continue with phone",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
+              backgroundColor: Colors.white,
+              elevation: 0,
+              centerTitle: true,
+              textTheme: Theme.of(context).textTheme,
+            ),
+            body: SafeArea(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: 130,
-                    child: Image.asset('images/encryption.png'),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 54),
-                    child: Text(
-                      "You'll receive a 6 digit \n code to verify next.",
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Color(0xFF818181),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.13,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(25),
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 230,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Enter your phone      ${phoneNumber.length} /10",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          phoneNumber,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        if (phoneNumber.length == 10)
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  VerifyPhone(phoneNumber: phoneNumber),
-                            ),
-                          );
-                        else {
-                          print("Phone Number Not Valid");
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.teal.shade900,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Continue",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFFFFFFFF),
+                            Color(0xFFF7F7F7),
+                          ],
                         ),
                       ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 130,
+                            child: Image.asset('images/encryption.png'),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 14, horizontal: 54),
+                            child: Text(
+                              "You'll receive a 6 digit \n code to verify next.",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Color(0xFF818181),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.13,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            width: 230,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  "Enter your phone      ${phoneNumber.length} /10",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  phoneNumber,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                if (phoneNumber.length == 10)
+                                  await VerifyNumber();
+
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) =>
+                                //         VerifyPhone(phoneNumber1: phoneNumber),
+                                //   ),
+                                // );
+                                else {
+                                  print("Phone Number Not Valid");
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.teal.shade900,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Continue",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  NumericPad(
+                    onNumberSelected: (value) {
+                      if (phoneNumber.length < 10) {
+                        setState(() {
+                          if (value != -1) {
+                            phoneNumber = phoneNumber + value.toString();
+                          }
+                        });
+                      }
+                      if (value == -1)
+                        setState(() {
+                          phoneNumber =
+                              phoneNumber.substring(0, phoneNumber.length - 1);
+                        });
+                    },
                   ),
                 ],
               ),
             ),
-          ),
-          NumericPad(
-            onNumberSelected: (value) {
-              if (phoneNumber.length < 10) {
-                setState(() {
-                  if (value != -1) {
-                    phoneNumber = phoneNumber + value.toString();
-                  }
-                });
-              }
-              if (value == -1)
-                setState(() {
-                  phoneNumber =
-                      phoneNumber.substring(0, phoneNumber.length - 1);
-                });
-            },
-          ),
-        ],
-      )),
-    );
+          );
   }
 }
 

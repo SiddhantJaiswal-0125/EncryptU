@@ -130,7 +130,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+
+
+
+      Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: downbar,
@@ -247,6 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         showLoading = false;
                       });
                       print("CODE SENT");
+
                       currentState =
                           MobileVerificationState.SHOW_OTP_FORM_STATE;
                       setState(() {

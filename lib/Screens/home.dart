@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
-  final User user;
+  final User ?user;
 }
 
 class _HomeScreenState extends State<HomeScreen>
@@ -22,9 +22,9 @@ class _HomeScreenState extends State<HomeScreen>
     // user = (await FirebaseAuth.instance.currentUser)!;
 
     print("--------------USER META DATA-----------------");
-    print(widget.user.metadata);
-    print(widget.user.phoneNumber);
-    print(widget.user.uid);
+    print(widget.user!.metadata);
+    print(widget.user!.phoneNumber);
+    print(widget.user!.uid);
   }
 
   @override

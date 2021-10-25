@@ -50,18 +50,19 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: check
-      //     ? HomeScreen(
-      //         user: user,
-      //       )
-      //     : LoginScreen(),
-      home: ContinueWithPhone(),
+      home: check
+          ? HomeScreen(
+              user: user,
+            )
+          : LoginScreen(),
+      // home: ContinueWithPhone(),
 
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         SharingScreen.id: (context) => SharingScreen(),
         FilesScreen.id: (context) => FilesScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
+
       },
     );
   }
