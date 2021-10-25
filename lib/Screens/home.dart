@@ -38,13 +38,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    Map<String, String> userData = {
-      'name': 'Siddhant',
-      'profile': Utility.demoLink,
-      'phoneNo': "+919931036296",
-      'email': "siddhantjaiswal363@gmail.com",
-      'address': "Ranchi Jharkhand"
-    };
+
 
     // print(userData);
 

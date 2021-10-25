@@ -1,3 +1,4 @@
+import 'package:encryptu/Utils/firebase_services.dart';
 import 'package:encryptu/Utils/utility.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -20,7 +21,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       body: Center(
-        child: Text("Settings Screen"),
+        child: GestureDetector(
+            onTap: () async {
+              print("TAPPED IN SETTING BUTTON");
+              FirebaseServices().getUserData();
+            },
+            child: Text("Settings Screen")),
       ),
     );
   }
