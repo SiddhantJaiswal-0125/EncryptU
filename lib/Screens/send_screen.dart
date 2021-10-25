@@ -86,6 +86,8 @@ class _SendScreenState extends State<SendScreen> {
             height: 20,
           ),
           TextFormField(
+            decoration: InputDecoration(hintText: "Password",focusColor: Colors.brown,),
+            obscuringCharacter: '\$',
 
             autovalidate: false,
             obscureText: true,
