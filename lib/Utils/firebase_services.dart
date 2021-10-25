@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirebaseServices {
   static var _firestore_instance = FirebaseFirestore.instance;
 
+
   bool isLoggedIn() {
     return FirebaseAuth.instance.currentUser != null;
   }
@@ -45,11 +46,22 @@ class FirebaseServices {
       print("USER NOT LOGGED IN");
   }
 
-  Future<void> uploadFile(File fi) async {
+  Future<customDSforFileStorageLink> uploadFile(File fi) async {
     customDSforFileStorageLink cds;
     cds = (await Storage_Services.upload(fi))!;
+    return cds;
+
   }
 
+  Future<void> encryptFile(customDSforFileStorageLink cds , String password)
+  async {
+    User? user = await currentUser();
+
+   FileStructure fs = new FileStructure(cds.url, cds.uniqueId, password,  user!.uid);
+   await _addFileData(fs);
+   return;
+
+  }
   Future<void> _addFileData(FileStructure fs) async {
     print("-----------------INSIDE addFileToFirestore  ---------------");
     // print(userData);
@@ -126,6 +138,5 @@ class FirebaseServices {
               .where("username", isEqualTo: username)
               .get())
           .docs
-          .length >
-      0;
+          .length > 0;
 }
