@@ -92,7 +92,7 @@ class FirebaseServices {
   //helps to get the data by id
   getFilesById(String id) {
     List<FileStructure> fi = [];
-    id = "330146681";
+    // id = "330146681";
 
     return _firestore_instance
         .collection('files')
@@ -109,7 +109,8 @@ class FirebaseServices {
 
           f = new FileStructure(url, id, password, owner);
           fi.add(f);
-        });
+        }
+        );
 
         return fi;
       } else

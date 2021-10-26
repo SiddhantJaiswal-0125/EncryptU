@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:encryptu/Helper/file_picker.dart';
+import 'package:encryptu/Screens/receive_screen.dart';
 import 'package:encryptu/Screens/send_screen.dart';
 import 'package:encryptu/Utils/Utility.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,9 +39,8 @@ class _SharingScreenState extends State<SharingScreen> {
       ),
       body: SingleChildScrollView(
         child: Center(
-
           child: Container(
-            height: MediaQuery.of(context).size.height -180,
+            height: MediaQuery.of(context).size.height - 180,
             child: Column(
               children: [
                 SizedBox(
@@ -81,26 +81,14 @@ class _SharingScreenState extends State<SharingScreen> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset: Offset(0, 3), // changes position of shadow
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
                             ),
                           ],
                         ),
                         child: sendOrReceive == 0
                             ? SendScreen()
-                            : Container(
-                                width: MediaQuery.of(context).size.width,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Get your file by Entering the Secret Code !",
-                                      style: GoogleFonts.slabo13px(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              )),
+                            : RecieveScreen()),
                   ),
                 ),
               ],
