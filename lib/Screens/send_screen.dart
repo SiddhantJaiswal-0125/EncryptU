@@ -85,29 +85,36 @@ class _SendScreenState extends State<SendScreen> {
           SizedBox(
             height: 20,
           ),
-          TextFormField(
-            decoration: InputDecoration(hintText: "Password",focusColor: Colors.brown,),
-            obscuringCharacter: '\$',
-
-            autovalidate: false,
-            obscureText: true,
-            enabled: takepassword,
-            onSaved: (value) => this.password = value!,
-            validator: (value) {
-              if (value!.length < 7) {
-                return 'a minimum of 7 characters is required';
-              }
-            },
+          Container(
+            width: 300,
+            child: TextField(
+              enabled: takepassword,
+              onChanged: (val) {
+                password = val;
+                print("Password is " + password);
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Enter the File Password',
+                hintText: 'Password ',
+              ),
+              autofocus: false,
+            ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           FlatButton(
-            color: Colors.teal.shade900,
+              color: Colors.teal.shade900,
               onPressed: () async {
                 if (cds != null) {
                   FirebaseServices().encryptFile(cds, password);
                 }
               },
-              child: Text("Upload Your File", style: GoogleFonts.roboto(fontSize: 18,color: Colors.white),))
+              child: Text(
+                "Upload Your File",
+                style: GoogleFonts.roboto(fontSize: 18, color: Colors.white),
+              ))
         ],
       ),
     );

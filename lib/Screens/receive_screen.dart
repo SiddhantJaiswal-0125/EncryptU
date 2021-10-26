@@ -12,9 +12,11 @@ class _RecieveScreenState extends State<RecieveScreen> {
   String _fileId = "";
   String _password = "";
 
-  late List<FileStructure> fi ;
-      bool _showPasswordsection = false;
+  late List<FileStructure> fi;
+
+  bool _showPasswordsection = false;
   bool _nofileExist = false;
+  bool passwordIncorrect = false;
 
   @override
   Widget build(BuildContext context) {
@@ -114,14 +116,16 @@ class _RecieveScreenState extends State<RecieveScreen> {
           ),
           GestureDetector(
             onTap: () async {
-              if(_password==fi[0].password)
-                {
-                  print("SAME PASSWORD ");
+              if (_password == fi[0].password) {
+                print("SAME PASSWORD ");
 
-                }
-              else
+                passwordIncorrect = false;
+              } else {
                 print("DIFFERENT PASSWORD");
+                passwordIncorrect = true;
+              }
 
+              setState(() {});
             },
             child: Container(
               padding: EdgeInsets.all(9),
@@ -132,11 +136,22 @@ class _RecieveScreenState extends State<RecieveScreen> {
               child: Text(
                 "Get File",
                 style:
-                GoogleFonts.lexendDeca(fontSize: 17, color: Colors.white),
+                    GoogleFonts.lexendDeca(fontSize: 17, color: Colors.white),
               ),
             ),
           ),
-
+          SizedBox(
+            height: 20,
+          ),
+          passwordIncorrect
+              ? Text(
+                  "The Password you have entered is WRONG",
+                  style: GoogleFonts.roboto(
+                    color: Colors.red,
+                    fontSize: 16,
+                  ),
+                )
+              : Container(),
         ],
       ),
     );
