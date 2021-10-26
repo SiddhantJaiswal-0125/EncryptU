@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirebaseServices {
   static var _firestore_instance = FirebaseFirestore.instance;
 
-
   bool isLoggedIn() {
     return FirebaseAuth.instance.currentUser != null;
   }
@@ -50,18 +49,18 @@ class FirebaseServices {
     customDSforFileStorageLink cds;
     cds = (await Storage_Services.upload(fi))!;
     return cds;
-
   }
 
-  Future<void> encryptFile(customDSforFileStorageLink cds , String password)
-  async {
+  Future<void> encryptFile(
+      customDSforFileStorageLink cds, String password) async {
     User? user = await currentUser();
 
-   FileStructure fs = new FileStructure(cds.url, cds.uniqueId, password,  user!.uid);
-   await _addFileData(fs);
-   return;
-
+    FileStructure fs =
+        new FileStructure(cds.url, cds.uniqueId, password, user!.uid);
+    await _addFileData(fs);
+    return;
   }
+
   Future<void> _addFileData(FileStructure fs) async {
     print("-----------------INSIDE addFileToFirestore  ---------------");
     // print(userData);
@@ -93,6 +92,7 @@ class FirebaseServices {
   getFilesById(String id) {
     List<FileStructure> fi = [];
     // id = "330146681";
+    // 330146681
 
     return _firestore_instance
         .collection('files')
@@ -109,12 +109,14 @@ class FirebaseServices {
 
           f = new FileStructure(url, id, password, owner);
           fi.add(f);
-        }
-        );
+        });
 
+        print("FI LENGTH " + fi.length.toString());
         return fi;
-      } else
+      } else {
         print("FILE QUERY IS NULL");
+        return [];
+      }
     });
   }
 
@@ -139,5 +141,6 @@ class FirebaseServices {
               .where("username", isEqualTo: username)
               .get())
           .docs
-          .length > 0;
+          .length >
+      0;
 }
