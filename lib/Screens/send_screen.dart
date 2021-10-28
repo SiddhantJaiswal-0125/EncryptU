@@ -13,7 +13,7 @@ class SendScreen extends StatefulWidget {
 
 class _SendScreenState extends State<SendScreen> {
   String password = "";
-  late customDSforFileStorageLink cds;
+  customDSforFileStorageLink? cds = null;
 
   bool takepassword = false;
   bool isuploading = false;
@@ -38,20 +38,22 @@ class _SendScreenState extends State<SendScreen> {
           GestureDetector(
             onTap: () async {
               File? fi = await FilePickerCustom().pickfiles();
-              isuploading = true;
-              setState(() {});
-              cds = await FirebaseServices().uploadFile(fi!);
-              isuploading = false;
-              takepassword = true;
-              setState(() {});
+              if (fi != null) {
+                isuploading = true;
+                setState(() {});
+                cds = await FirebaseServices().uploadFile(fi);
+                isuploading = false;
+                takepassword = true;
+                setState(() {});
+              }
             },
             child: Container(
               width: MediaQuery.of(context).size.width / 2,
               height: 200,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.green,
-              ),
+                  shape: BoxShape.circle,
+                  color: Colors.green,
+                  border: Border.all(color: Colors.red, width: 2)),
               child: Center(
                 child: isuploading
                     ? CircularProgressIndicator(
@@ -105,10 +107,10 @@ class _SendScreenState extends State<SendScreen> {
             height: 20,
           ),
           FlatButton(
-              color: Colors.teal.shade900,
+              color: takepassword ? Colors.teal.shade900 : Colors.grey,
               onPressed: () async {
                 if (cds != null) {
-                  FirebaseServices().encryptFile(cds, password);
+                  FirebaseServices().encryptFile(cds!, password);
                 }
               },
               child: Text(

@@ -56,7 +56,7 @@ class FirebaseServices {
     User? user = await currentUser();
 
     FileStructure fs =
-        new FileStructure(cds.url, cds.uniqueId, password, user!.uid);
+        new FileStructure(cds.url, cds.uniqueId, password, user!.uid,true);
     await _addFileData(fs);
     return;
   }
@@ -106,8 +106,9 @@ class FirebaseServices {
           String url = element['fileURL'];
           String password = element['password'];
           String owner = element['owner'];
+          bool show = element['show'];
 
-          f = new FileStructure(url, id, password, owner);
+          f = new FileStructure(url, id, password, owner,show);
           fi.add(f);
         });
 
@@ -119,6 +120,38 @@ class FirebaseServices {
       }
     });
   }
+  getFilesByUserId(String id) {
+    List<FileStructure> fi = [];
+    // id = "330146681";
+    // 330146681
+
+    return _firestore_instance
+        .collection('files')
+        .where('owner', isEqualTo: id)
+        .where('show', isEqualTo: true)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot != null) {
+        querySnapshot.docs.forEach((element) {
+          FileStructure f;
+          String url = element['fileURL'];
+          String password = element['password'];
+          String owner = element['owner'];
+          bool show = element['show'];
+
+          f = new FileStructure(url, id, password, owner,show);
+          fi.add(f);
+        });
+
+        print("FI LENGTH " + fi.length.toString());
+        return fi;
+      } else {
+        print("FILE QUERY IS NULL");
+        return [];
+      }
+    });
+  }
+
 
   getUserData() async {
     _firestore_instance
