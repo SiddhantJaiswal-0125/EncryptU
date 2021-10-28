@@ -123,45 +123,13 @@ class _FilesScreenState extends State<FilesScreen> {
                     SizedBox(
                       width: 20,
                     ),
+                    clip(fs),
+                    Spacer(),
                     Container(
-                      height: 40,
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: copied ? Colors.teal.shade900 : Colors.white,
-                        border: Border.all(color: Colors.teal, width: 0.8),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Row(
-                          children: [
-                            Text(
-                              "${fs.uniqueId}",
-                              style: GoogleFonts.abel(
-                                color: copied ? Colors.white : Colors.black,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.copy,
-                                color: copied ? Colors.white : Colors.black,
-                                size: 17,
-                              ),
-                              onPressed: () {
-                                Clipboard.setData(
-                                  ClipboardData(
-                                    text: fs.uniqueId.toString(),
-                                  ),
-                                );
-                                copied = true;
-                                setState(() {});
-                                final snak = SnackBar(
-                                    content: Text('Id copied to Clipboard'));
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snak);
-                              },
-                            ),
-                          ],
-                        ),
+                      decoration: BoxDecoration(shape: BoxShape.circle),
+                      child: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {},
                       ),
                     )
                   ],
@@ -174,6 +142,45 @@ class _FilesScreenState extends State<FilesScreen> {
           height: 10,
         )
       ],
+    );
+  }
+
+  Widget clip(FileStructure fs) {
+    return Container(
+      // height: 40,
+      padding: EdgeInsets.only(left: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.teal, width: 0.8),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Text(
+            "${fs.uniqueId}",
+            style: GoogleFonts.abel(
+              color: Colors.black,
+            ),
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.copy,
+              color: Colors.black,
+              size: 17,
+            ),
+            onPressed: () {
+              Clipboard.setData(
+                ClipboardData(
+                  text: fs.uniqueId.toString(),
+                ),
+              );
+
+              final snak = SnackBar(content: Text('Id copied to Clipboard'));
+              ScaffoldMessenger.of(context).showSnackBar(snak);
+            },
+          ),
+        ],
+      ),
     );
   }
 }
