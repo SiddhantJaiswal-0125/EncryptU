@@ -1,4 +1,5 @@
 import 'package:encryptu/CustomDS/fileDS.dart';
+import 'package:encryptu/CustomDS/filesFirebase.dart';
 import 'package:encryptu/Utils/Utility.dart';
 import 'package:encryptu/Utils/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,13 +24,17 @@ class _FilesScreenState extends State<FilesScreen> {
   // };
 
   // bool copied = false;
-  List<FileStructure> files = [];
+
+  int selectedIndex = -1;
+  List<FirebaseFileStructure> files = [];
+  int showPasswordindex = -1;
 
   getFiles() async {
     FirebaseServices _services = FirebaseServices();
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       files = await _services.getFilesByUserId(user.uid);
+      setState(() {});
 
       print("USER ID IS " + user.uid);
 
@@ -38,7 +43,7 @@ class _FilesScreenState extends State<FilesScreen> {
   }
 
   FileStructure temp = new FileStructure(
-      "fafjkafka", "4314878924", "SIDDHANT JAISWAL", "47831974", true);
+      "fafjkafka", "4314878924", "Siddhant@25", "47831974", true);
 
   @override
   void initState() {
@@ -68,14 +73,14 @@ class _FilesScreenState extends State<FilesScreen> {
             Text(
               "Hey, Welcome again!!",
               style: GoogleFonts.montserrat(
-                  fontSize: 30, color: Colors.teal.shade900),
+                  fontSize: 28, color: Colors.teal.shade900),
             ),
             SizedBox(
               height: 10,
             ),
             Text(
-              "Your are in Safe hand.",
-              style: GoogleFonts.montserrat(fontSize: 20),
+              "Your Files are in Safe hand.",
+              style: GoogleFonts.montserrat(fontSize: 17),
             ),
             Divider(
               thickness: 1.0,
@@ -85,11 +90,47 @@ class _FilesScreenState extends State<FilesScreen> {
             ),
             Container(
               height: MediaQuery.of(context).size.height - 300,
-              child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    return fileTile(temp);
-                  }),
+              child: files == null || files.length <= 0
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Oops..!!😞",
+                            style: GoogleFonts.abel(
+                                fontSize: 25, fontWeight: FontWeight.w700),
+                          ),
+                          Text(
+                            "You haven't any upload file yet..",
+                            style: GoogleFonts.abel(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                                color: Colors.grey),
+                          ),
+                          SizedBox(height: 20,),
+                          Card(
+                            elevation: 0,
+                            color: Colors.grey.shade200,
+                            child: Padding(
+
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Go to sharing page",
+                                style: GoogleFonts.abel(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize:17,
+                                    color: Colors.grey),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: files.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return fileTile(files[index], index);
+                      }),
             ),
           ],
         ),
@@ -97,7 +138,7 @@ class _FilesScreenState extends State<FilesScreen> {
     );
   }
 
-  Widget fileTile(FileStructure fs) {
+  Widget fileTile(FirebaseFileStructure fs, int index) {
     bool copied = false;
 
     return Column(
@@ -109,31 +150,79 @@ class _FilesScreenState extends State<FilesScreen> {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.teal.shade900, width: 0.4),
             ),
-            padding: EdgeInsets.all(14),
+            padding: EdgeInsets.only(
+              left: 10,
+            ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "File ID : ",
-                      style: GoogleFonts.anticDidone(
-                          fontSize: 15, fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    clip(fs),
-                    Spacer(),
-                    Container(
-                      decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {},
+                Container(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Text(
+                        "File ID : ",
+                        style: GoogleFonts.anticDidone(
+                            fontSize: 15, fontWeight: FontWeight.w700),
                       ),
-                    )
-                  ],
-                )
+                      clip(fs, index),
+                      Spacer(),
+                      Container(
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          onPressed: () async {
+                            await FirebaseServices().deleteFile(fs.docID);
+
+                            await getFiles();
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Password: ",
+                        style: GoogleFonts.anticDidone(
+                            fontSize: 15, fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        showPasswordindex == index
+                            ? "${fs.password}"
+                            : "**************",
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            if (index == showPasswordindex)
+                              showPasswordindex = -1;
+                            else
+                              showPasswordindex = index;
+                          });
+                        },
+                        icon: Icon(
+                          showPasswordindex == index
+                              ? Icons.remove_red_eye
+                              : Icons.remove_red_eye_outlined,
+                          color: showPasswordindex == index
+                              ? Colors.green
+                              : Colors.black,
+                        ),
+                      ),
+
+                      // clip(fs, index),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -145,42 +234,40 @@ class _FilesScreenState extends State<FilesScreen> {
     );
   }
 
-  Widget clip(FileStructure fs) {
-    return Container(
-      // height: 40,
-      padding: EdgeInsets.only(left: 4),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.teal, width: 0.8),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          Text(
-            "${fs.uniqueId}",
-            style: GoogleFonts.abel(
-              color: Colors.black,
-            ),
+  Widget clip(FirebaseFileStructure fs, int index) {
+    return Row(
+      children: [
+        Text(
+          "${fs.uniqueId}",
+          style: GoogleFonts.abel(
+            color: selectedIndex == index ? Colors.green : Colors.black,
           ),
-          IconButton(
-            icon: Icon(
-              Icons.copy,
-              color: Colors.black,
-              size: 17,
-            ),
-            onPressed: () {
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.copy,
+            color: selectedIndex == index ? Colors.green : Colors.black,
+            size: 17,
+          ),
+          onPressed: () {
+            if (selectedIndex != index) {
+              setState(() {
+                selectedIndex = index;
+              });
               Clipboard.setData(
                 ClipboardData(
                   text: fs.uniqueId.toString(),
                 ),
               );
 
-              final snak = SnackBar(content: Text('Id copied to Clipboard'));
+              final snak =
+                  SnackBar(content: Text('File Unique is copied to Clipboard'));
               ScaffoldMessenger.of(context).showSnackBar(snak);
-            },
-          ),
-        ],
-      ),
+            }
+            ;
+          },
+        ),
+      ],
     );
   }
 }

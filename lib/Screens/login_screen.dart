@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:shimmer/shimmer.dart';
 
 enum MobileVerificationState {
   SHOW_MOBILE_FORM_STATE,
@@ -11,6 +12,7 @@ enum MobileVerificationState {
 
 class LoginScreen extends StatefulWidget {
   static String id = "LoginScreen";
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -130,11 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return
-
-
-
-      Scaffold(
+    return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: downbar,
@@ -147,11 +145,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget InputBox() {
     return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.all(20),
-        child: currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
-            ? phoneInput(context)
-            : input1(context),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(48.0),
+            child: Image.asset(
+              "images/encryption.png",
+              fit: BoxFit.contain,
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(20),
+            child:
+                currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
+                    ? phoneInput(context)
+                    : input1(context),
+          ),
+        ],
       ),
     );
   }
@@ -193,6 +203,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             InternationalPhoneNumberInput(
               onInputChanged: (PhoneNumber number) {
+
+
                 print("Here " + number.phoneNumber.toString());
                 _phoneNo = number.phoneNumber.toString();
               },
@@ -208,6 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
               initialValue: number,
               textFieldController: controller,
               formatInput: false,
+              maxLength: 10,
               keyboardType:
                   TextInputType.numberWithOptions(signed: true, decimal: true),
               inputBorder: OutlineInputBorder(),
@@ -264,15 +277,22 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 40),
                 decoration: BoxDecoration(
-                    color: Colors.blueAccent,
+                    color: Colors.teal.shade900,
                     borderRadius: BorderRadius.circular(50)),
                 padding: EdgeInsets.all(20),
                 child: Center(
-                  child: Text('Send OTP',
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.yellowAccent,
+                    highlightColor: Colors.pinkAccent,
+                    child: Text(
+                      'Send OTP',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white)),
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),

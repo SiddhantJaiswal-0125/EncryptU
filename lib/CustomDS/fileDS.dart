@@ -5,6 +5,7 @@ class FileStructure
   final  String password;
   final String ownerId;
   final bool show;
+
   FileStructure(this.url, this.uniqueId, this.password, this.ownerId, this.show);
 
 

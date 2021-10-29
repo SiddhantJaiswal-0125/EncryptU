@@ -3,6 +3,7 @@ import 'package:encryptu/Screens/home.dart';
 import 'package:encryptu/Screens/login_screen.dart';
 import 'package:encryptu/Screens/registration_screen.dart';
 import 'package:encryptu/Screens/sharing_screen.dart';
+import 'package:encryptu/Screens/test.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -55,7 +56,7 @@ class _MyAppState extends State<MyApp> {
               user: user,
             )
           : LoginScreen(),
-      // home: ContinueWithPhone(),
+      // home: Testing(),
 
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
