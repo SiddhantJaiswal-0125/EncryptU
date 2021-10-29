@@ -31,7 +31,7 @@ class _SendScreenState extends State<SendScreen> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 20,top: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -60,7 +60,7 @@ class _SendScreenState extends State<SendScreen> {
                         color: Colors.white,
                       )
                     : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             "+",

@@ -1,4 +1,6 @@
+import 'package:encryptu/CustomDS/userFirebase.dart';
 import 'package:encryptu/Screens/login_screen.dart';
+import 'package:encryptu/Utils/firebase_services.dart';
 import 'package:encryptu/Utils/utility.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +10,28 @@ import 'package:shimmer/shimmer.dart';
 class SettingsScreen extends StatefulWidget {
   static String id = "SettingScreen";
 
+
+  const SettingsScreen({Key? key,}) : super(key: key);
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
   ScreenState currentState = ScreenState.NORMAL_SCREEN;
+  late UserFirebase userFirebase ;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
+  getUser() async
+  {
+   await   FirebaseServices().getUserData();
+
+  }
 
   @override
   Widget build(BuildContext context) {

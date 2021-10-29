@@ -167,7 +167,7 @@ class FirebaseServices {
       if (querySnapshot != null) {
         querySnapshot.docs.forEach((doc) {
           print("PRINTING");
-          print(doc["name"]);
+          print("USER NAME "+doc["name"]);
         });
       } else
         print("QUERY SNAPSHOT IS NULL");
