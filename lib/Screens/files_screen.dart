@@ -107,18 +107,19 @@ class _FilesScreenState extends State<FilesScreen> {
                                 fontSize: 20,
                                 color: Colors.grey),
                           ),
-                          SizedBox(height: 20,),
+                          SizedBox(
+                            height: 20,
+                          ),
                           Card(
                             elevation: 0,
                             color: Colors.grey.shade200,
                             child: Padding(
-
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 "Go to sharing page",
                                 style: GoogleFonts.abel(
                                     fontWeight: FontWeight.w400,
-                                    fontSize:17,
+                                    fontSize: 17,
                                     color: Colors.grey),
                               ),
                             ),
@@ -138,9 +139,53 @@ class _FilesScreenState extends State<FilesScreen> {
     );
   }
 
+  Future<void> _showMyDialog(FirebaseFileStructure fs) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you confirm to delete file ? '),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children:  <Widget>[
+                Text('File ID : ${fs.uniqueId}', style: GoogleFonts.abel(fontSize: 14),),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Approve',
+                style: GoogleFonts.roboto(color: Colors.green, fontSize: 16),
+              ),
+              onPressed: () async {
+                await FirebaseServices().deleteFile(fs.docID);
+                await getFiles();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Deny',
+                style: GoogleFonts.roboto(color: Colors.red, fontSize: 16),
+              ),
+              onPressed: () async {
+                // await FirebaseServices().deleteFile(fs.docID);
+                //
+                // await getFiles();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget fileTile(FirebaseFileStructure fs, int index) {
     bool copied = false;
-
     return Column(
       children: [
         Card(
@@ -176,9 +221,7 @@ class _FilesScreenState extends State<FilesScreen> {
                             color: Colors.red,
                           ),
                           onPressed: () async {
-                            await FirebaseServices().deleteFile(fs.docID);
-
-                            await getFiles();
+                            _showMyDialog(fs);
                           },
                         ),
                       )
