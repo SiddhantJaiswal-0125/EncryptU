@@ -1,8 +1,9 @@
 import 'package:encryptu/Screens/login_screen.dart';
-import 'package:encryptu/Utils/firebase_services.dart';
 import 'package:encryptu/Utils/utility.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SettingsScreen extends StatefulWidget {
   static String id = "SettingScreen";
@@ -12,6 +13,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  ScreenState currentState = ScreenState.NORMAL_SCREEN;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,14 +39,194 @@ class _SettingsScreenState extends State<SettingsScreen> {
           style: Utility.kHeadingTextStyle(),
         ),
       ),
-      body: Center(
+      body: Container(
+        padding: EdgeInsets.only(left: 15, right: 15, top: 20),
         child: GestureDetector(
-            onTap: () async {
-              print("TAPPED IN SETTING BUTTON");
-              FirebaseServices().getUserData();
-            },
-            child: Text("Settings Screen")),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: ListView(
+            children: [
+              Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 130,
+                      height: 130,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 4, color: Colors.white),
+                          boxShadow: [
+                            BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                            )
+                          ],
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(Utility.demoLink),
+                          )),
+                    ),
+                    editPencil(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              currentState == ScreenState.NORMAL_SCREEN
+                  ? normalScreen()
+                  : editScreen(),
+            ],
+          ),
+        ),
       ),
     );
   }
+
+  Widget editScreen() {
+    return Column(children: [
+      buildTextEditFeild("Full Name", "Demon ", Icons.person),
+      buildTextEditFeild("'Email Id : ", "Siddhant@gmail.com ", Icons.mail),
+      buildTextEditFeild("Phone Number : ", "+91342374823", Icons.call),
+      buildTextEditFeild("Address", "Delhi ", Icons.home),
+    ]);
+  }
+
+  Widget normalScreen() {
+    return Column(
+      children: [
+        textFeild("Siddhant Jaiswal", Icons.person),
+        SizedBox(
+          height: 10,
+        ),
+        textFeild("siddhantjaiswal363@gmail.com", Icons.mail),
+        SizedBox(
+          height: 10,
+        ),
+        textFeild("+919931036296", Icons.call),
+        SizedBox(
+          height: 10,
+        ),
+        textFeild("Ranchi", Icons.home),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 2, color: Colors.green)),
+              padding: EdgeInsets.all(8),
+              child: Text(
+                "Male",
+                style:
+                    GoogleFonts.abel(fontSize: 15, fontWeight: FontWeight.w600),
+              ),
+            ),
+            Spacer(),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.teal,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 2, color: Colors.green)),
+              padding: EdgeInsets.all(8),
+              child: Shimmer.fromColors(
+                baseColor: Colors.yellowAccent,
+                highlightColor: Colors.pinkAccent,
+                child: Text(
+                  'Verified User',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget editPencil() {
+    return Positioned(
+      bottom: 0,
+      right: 1,
+      child: Container(
+        height: 35,
+        width: 35,
+        child: GestureDetector(
+          onTap: () {
+            currentState = ScreenState.EDIT_SCREEN;
+            setState(() {
+
+            });
+
+          },
+          child: Icon(
+            Icons.edit,
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(width: 2, color: Colors.white),
+          color: Colors.green,
+        ),
+      ),
+    );
+  }
+
+  Widget textFeild(String name, IconData icon) {
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(icon),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              name,
+              style: GoogleFonts.abel(fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextEditFeild(
+      String labelText, String placeholder, IconData icon) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {},
+          ),
+          contentPadding: EdgeInsets.only(bottom: 5),
+          labelText: labelText,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintText: placeholder,
+          hintStyle: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+        ),
+      ),
+    );
+  }
+}
+
+enum ScreenState {
+  EDIT_SCREEN,
+  NORMAL_SCREEN,
 }

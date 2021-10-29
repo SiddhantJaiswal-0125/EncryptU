@@ -6,7 +6,13 @@ class FirebaseFileStructure
   final String ownerId;
   final bool show;
   final String docID ;
-  FirebaseFileStructure(this.url, this.uniqueId, this.password, this.ownerId, this.show, this.docID);
+  FirebaseFileStructure(
+      {required this.url,
+      required this.uniqueId,
+      required this.password,
+      required this.ownerId,
+      required this.show,
+      required this.docID});
 
 
 

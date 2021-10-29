@@ -2,6 +2,7 @@ import 'package:encryptu/CustomDS/fileDS.dart';
 import 'package:encryptu/Utils/firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RecieveScreen extends StatefulWidget {
   @override
@@ -120,6 +121,8 @@ class _RecieveScreenState extends State<RecieveScreen> {
                 print("SAME PASSWORD ");
 
                 passwordIncorrect = false;
+
+                _launchInBrowser(fi[0].url);
               } else {
                 print("DIFFERENT PASSWORD");
                 passwordIncorrect = true;
@@ -155,5 +158,18 @@ class _RecieveScreenState extends State<RecieveScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

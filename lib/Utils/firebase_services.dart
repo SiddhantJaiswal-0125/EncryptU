@@ -66,11 +66,12 @@ class FirebaseServices {
     print("-----------------INSIDE addFileToFirestore  ---------------");
     // print(userData);
 
-    Map<String, String> data = {
+    Map<String, dynamic> data = {
       'fileId': fs.uniqueId.toString(),
       'fileURL': fs.url.toString(),
       'owner': fs.ownerId.toString(),
       'password': fs.password.toString(),
+      'show':true
     };
 
     if (isLoggedIn()) {
@@ -139,12 +140,13 @@ class FirebaseServices {
           FirebaseFileStructure f;
           String url = element['fileURL'];
           String password = element['password'];
-          String owner = element['owner'];
+          String fileId = element['fileId'];
           bool show = element['show'];
           String docId = element.id;
           print("DOC ID IS  : ${docId}");
 
-          f = new FirebaseFileStructure(url, id, password, owner, show, docId);
+          // f = new FirebaseFileStructure(url, id, password, fileId, show, docId);
+          f = new FirebaseFileStructure(url: url, uniqueId: fileId, password: password, ownerId: id, show: show, docID: docId);
           fi.add(f);
         });
 

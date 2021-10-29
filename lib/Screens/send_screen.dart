@@ -49,11 +49,11 @@ class _SendScreenState extends State<SendScreen> {
             },
             child: Container(
               width: MediaQuery.of(context).size.width / 2,
-              height: 200,
+              height: 180,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.green,
-                  border: Border.all(color: Colors.red, width: 2)),
+                  color: Colors.green.shade600,
+                  border: Border.all(color: Colors.red, width: 1.5)),
               child: Center(
                 child: isuploading
                     ? CircularProgressIndicator(
