@@ -10,8 +10,9 @@ import 'package:shimmer/shimmer.dart';
 class SettingsScreen extends StatefulWidget {
   static String id = "SettingScreen";
 
-
-  const SettingsScreen({Key? key,}) : super(key: key);
+  const SettingsScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -19,7 +20,14 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   ScreenState currentState = ScreenState.NORMAL_SCREEN;
-  late UserFirebase userFirebase ;
+  List<UserFirebase> userFirebase = [];
+  String name = "";
+  String email = "";
+  String phoneNo = "";
+  String address = "";
+  int selected = 1;
+  UserFirebase? user;
+  final myController = TextEditingController();
 
   @override
   void initState() {
@@ -27,14 +35,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     getUser();
   }
-  getUser() async
-  {
-   await   FirebaseServices().getUserData();
 
+  getUser() async {
+    FirebaseServices _services = FirebaseServices();
+    User? user1 = FirebaseAuth.instance.currentUser;
+    if (user1 != null) {
+      userFirebase = await _services.getUserData(user1.uid);
+      setState(() {});
+
+      print("USER ID IS " + user1.uid);
+
+      print("FILES LENGHT" + userFirebase.length.toString());
+      user = userFirebase[0];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+
+    getUser();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -105,69 +124,292 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget editScreen() {
     return Column(children: [
-      buildTextEditFeild("Full Name", "Demon ", Icons.person),
-      buildTextEditFeild("'Email Id : ", "Siddhant@gmail.com ", Icons.mail),
-      buildTextEditFeild("Phone Number : ", "+91342374823", Icons.call),
-      buildTextEditFeild("Address", "Delhi ", Icons.home),
+      Padding(
+        padding: EdgeInsets.only(bottom: 30),
+        child: TextField(
+          onChanged: (val) {
+            name = val;
+            print("NAME " + name);
+          },
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.person),
+            suffixIcon: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {},
+            ),
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: "Your Name",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: "Rahul Gandhi",
+            hintStyle: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+          ),
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(bottom: 30),
+        child: TextField(
+          onChanged: (val) {
+            email = val;
+            print("email " + email);
+          },
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.mail),
+            suffixIcon: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {},
+            ),
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: "Your email",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: "test@gmail.com",
+            hintStyle: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+          ),
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(bottom: 30),
+        child: TextField(
+          onChanged: (val) {
+            phoneNo = val;
+            print("phone " + phoneNo);
+          },
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.call),
+            suffixIcon: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {},
+            ),
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: "Your phone",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: "+919943241432",
+            hintStyle: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+          ),
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(bottom: 30),
+        child: TextField(
+          onChanged: (val) {
+            address = val;
+            print("Address " + address);
+          },
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.home),
+            suffixIcon: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {},
+            ),
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: "Your Address",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: "Delhi",
+            hintStyle: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+          ),
+        ),
+      ),
+      Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              selected = 1;
+              setState(() {});
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  color: selected == 1 ? Colors.green : Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: selected == 1 ? Colors.red : Colors.green,
+                  )),
+              child: Text(
+                "Male",
+                style: GoogleFonts.roboto(
+                    fontSize: 18,
+                    color: selected == 1 ? Colors.white : Colors.black),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          GestureDetector(
+            onTap: () {
+              print(selected);
+              selected = 2;
+              print(selected);
+
+              setState(() {});
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  color: selected == 2 ? Colors.green : Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: selected == 2 ? Colors.red : Colors.green,
+                  )),
+              child: Text(
+                "Female",
+                style: GoogleFonts.roboto(
+                    fontSize: 18,
+                    color: selected == 2 ? Colors.white : Colors.black),
+              ),
+            ),
+          )
+        ],
+      ),
+      SizedBox(
+        height: 20,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.all(10),
+            height: 50.0,
+            decoration: BoxDecoration(
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Colors.blue.withOpacity(0.1),
+                  blurRadius: 1,
+                  offset: Offset(10, 10),
+                ),
+              ],
+            ),
+            child: RaisedButton(
+              elevation: 30,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0.0),
+                  side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+              onPressed: () {
+                currentState = ScreenState.NORMAL_SCREEN;
+                setState(() {});
+              },
+              padding: EdgeInsets.all(10.0),
+              color: Colors.red.shade900,
+              textColor: Colors.white,
+              child:
+                  Text("Cancel".toUpperCase(), style: TextStyle(fontSize: 15)),
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            height: 50.0,
+            decoration: BoxDecoration(
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Colors.blue.withOpacity(0.1),
+                  blurRadius: 1,
+                  offset: Offset(10, 10),
+                ),
+              ],
+            ),
+            child: RaisedButton(
+              elevation: 30,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0.0),
+                  side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+              onPressed: () async {
+                Map<String, dynamic> map = {
+                  'address': address,
+                  'email': email,
+                  'gender': selected == 1 ? "Male" : "Female",
+                  'name': name,
+                  'phoneNo': phoneNo,
+                };
+             await  FirebaseServices().updateUserData(user!.docId, map);
+
+             setState(() {
+               currentState = ScreenState.NORMAL_SCREEN;
+             });
+              },
+              padding: EdgeInsets.all(10.0),
+              color: Colors.teal.shade900,
+              textColor: Colors.white,
+              child:
+                  Text("Update".toUpperCase(), style: TextStyle(fontSize: 15)),
+            ),
+          ),
+        ],
+      )
     ]);
   }
 
   Widget normalScreen() {
-    return Column(
-      children: [
-        textFeild("Siddhant Jaiswal", Icons.person),
-        SizedBox(
-          height: 10,
-        ),
-        textFeild("siddhantjaiswal363@gmail.com", Icons.mail),
-        SizedBox(
-          height: 10,
-        ),
-        textFeild("+919931036296", Icons.call),
-        SizedBox(
-          height: 10,
-        ),
-        textFeild("Ranchi", Icons.home),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 2, color: Colors.green)),
-              padding: EdgeInsets.all(8),
-              child: Text(
-                "Male",
-                style:
-                    GoogleFonts.abel(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
+    return user == null
+        ? Center(
+            child: CircularProgressIndicator(
+              color: Colors.red,
             ),
-            Spacer(),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.teal,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 2, color: Colors.green)),
-              padding: EdgeInsets.all(8),
-              child: Shimmer.fromColors(
-                baseColor: Colors.yellowAccent,
-                highlightColor: Colors.pinkAccent,
-                child: Text(
-                  'Verified User',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+          )
+        : Column(
+            children: [
+              textFeild("${user!.name}", Icons.person),
+              SizedBox(
+                height: 10,
               ),
-            )
-          ],
-        )
-      ],
-    );
+              textFeild("${user!.emailId}", Icons.mail),
+              SizedBox(
+                height: 10,
+              ),
+              textFeild("${user!.phoneNumber}", Icons.call),
+              SizedBox(
+                height: 10,
+              ),
+              textFeild("${user!.address}", Icons.home),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            width: 2,
+                            color: user!.gender == "Male"
+                                ? Colors.green
+                                : Colors.pink)),
+                    padding: EdgeInsets.all(8),
+                    child: Text(
+                      "${user!.gender}",
+                      style: GoogleFonts.abel(
+                          fontSize: 15, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  Spacer(),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.teal,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: Colors.green)),
+                    padding: EdgeInsets.all(8),
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.yellowAccent,
+                      highlightColor: Colors.pinkAccent,
+                      child: Text(
+                        'Verified User',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          );
   }
 
   Widget editPencil() {
@@ -180,10 +422,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: GestureDetector(
           onTap: () {
             currentState = ScreenState.EDIT_SCREEN;
-            setState(() {
-
-            });
-
+            setState(() {});
           },
           child: Icon(
             Icons.edit,

@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen>
     // TODO: implement initState
     fetchDetails();
     currentState = ScreenState.SHARING;
-
     super.initState();
   }
 

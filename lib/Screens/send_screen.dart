@@ -33,8 +33,9 @@ class _SendScreenState extends State<SendScreen> {
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20,top: 10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(height: 30,),
           GestureDetector(
             onTap: () async {
               File? fi = await FilePickerCustom().pickfiles();
@@ -60,7 +61,7 @@ class _SendScreenState extends State<SendScreen> {
                         color: Colors.white,
                       )
                     : Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "+",

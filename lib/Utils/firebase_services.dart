@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:encryptu/CustomDS/fileDS.dart';
 import 'package:encryptu/CustomDS/filesFirebase.dart';
 import 'package:encryptu/CustomDS/userDS.dart';
+import 'package:encryptu/CustomDS/userFirebase.dart';
 import 'package:encryptu/Utils/storage_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -71,7 +72,7 @@ class FirebaseServices {
       'fileURL': fs.url.toString(),
       'owner': fs.ownerId.toString(),
       'password': fs.password.toString(),
-      'show':true
+      'show': true
     };
 
     if (isLoggedIn()) {
@@ -124,10 +125,6 @@ class FirebaseServices {
   }
 
   getFilesByUserId(String id) {
-    // List<FileStructure> fi = [];
-    // id = "330146681";
-    // 330146681
-
     List<FirebaseFileStructure> fi = [];
     return _firestore_instance
         .collection('files')
@@ -143,10 +140,17 @@ class FirebaseServices {
           String fileId = element['fileId'];
           bool show = element['show'];
           String docId = element.id;
+
           print("DOC ID IS  : ${docId}");
 
           // f = new FirebaseFileStructure(url, id, password, fileId, show, docId);
-          f = new FirebaseFileStructure(url: url, uniqueId: fileId, password: password, ownerId: id, show: show, docID: docId);
+          f = new FirebaseFileStructure(
+              url: url,
+              uniqueId: fileId,
+              password: password,
+              ownerId: id,
+              show: show,
+              docID: docId);
           fi.add(f);
         });
 
@@ -159,18 +163,39 @@ class FirebaseServices {
     });
   }
 
-  getUserData() async {
-    _firestore_instance
+  getUserData(String uid) {
+    List<UserFirebase> fi = [];
+    return _firestore_instance
         .collection('user')
+        .where('uid', isEqualTo: uid)
         .get()
         .then((QuerySnapshot querySnapshot) {
       if (querySnapshot != null) {
         querySnapshot.docs.forEach((doc) {
+          UserFirebase f;
           print("PRINTING");
-          print("USER NAME "+doc["name"]);
+          print("USER NAME " + doc['name']);
+          String name = doc['name'];
+          String email = doc['email'];
+          String phone = doc['phoneNo'];
+          String profile = doc['profile'];
+          String address = doc['address'];
+          String gender = doc['gender'];
+          String docId = doc.id;
+
+          print("DOC ID IS  : ${docId}");
+
+          // f = new FirebaseFileStructure(url, id, password, fileId, show, docId);
+         f = new UserFirebase(name: name, photoUrl: profile, phoneNumber: phone, emailId: email, address: address, docId: docId, gender: gender);
+          fi.add(f);
         });
-      } else
-        print("QUERY SNAPSHOT IS NULL");
+
+        print("FI LENGTH " + fi.length.toString());
+        return fi;
+      } else {
+        print("FILE QUERY IS NULL");
+        return [];
+      }
     });
   }
 
@@ -191,6 +216,14 @@ class FirebaseServices {
         .then((value) => print("SUCCESS"))
         .catchError((onError) => print(onError.toString()));
   }
+  updateUserData(selectedDoc, newValue) {
+    _firestore_instance
+        .collection('user')
+        .doc(selectedDoc)
+        .update(newValue)
+        .then((value) => print("SUCCESS"))
+        .catchError((onError) => print(onError.toString()));
+  }
 
   Future<void> deleteFile(String selectedDoc) async {
     Map<String, bool> map = {'show': false};
@@ -199,3 +232,5 @@ class FirebaseServices {
     await _updateData(selectedDoc, map);
   }
 }
+
+//
