@@ -9,22 +9,21 @@
 * Star this Repo. if you like the app & support me, this keeps me motivated and keep going for further development
 
 A Mobile +  Web Application where the user can upload its important file very securely and can provide access to limited users who can access the file all around the world through this application.
-It user realtime database to provide a better user experience.
+It uses realtime database to provide a better user experience.
 
 Going with Flutter is a easy choice with its quick development time and fast execution times.
-Firebase as the backend and storage solution makes it very easy to scale and change all the quiz subjects.
-The biggest challenge was getting the Oauth to work in Google services and Firebase login.
+Firebase as the backend and storage solution makes it very easy to scale .
 
 # App Screen
 
 
 - Login (Phone + OTP ) Screen
 
--  Sharing Page
+-  Uploading Page
 
 - Recieving Page
 
-- Files
+- Files Manager Page
 
 - Profile Page 
 
