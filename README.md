@@ -57,15 +57,7 @@ $ flutter run
 - ![](https://img.shields.io/badge/Database-grey)  ![](https://img.shields.io/badge/Firebase-yellow)
 
 
-# 🔦 Any other specific thing you want to highlight?
-- This idea is completely feasible as of now because the technology stack used is cross platform allowing reach for a larger number of audience
 
-- The backend can be scaled up infinitely to match the scale of audience required to carter using the industry standard technologies like Firebase. 
-- Some of our **Future Aspects**
-
-   - Add Encrpytion profiling for easy assessment of patient by the doctors.
-   - Add an SOS feature to notification panel for quick emergency response from nearby doctors.
-   - Add sensor profiling to auto detect accidents and auto emergency response.
 
 
 # 🔥 Our Pitch
