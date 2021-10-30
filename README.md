@@ -81,15 +81,11 @@ It uses advance and very reliable technology as a service provider to provide pr
 - Some of our **Future Aspects**
 
    - Encrypt the File using some Encryption Algorithm.
+   - Multiple UI-Themes.
    - Add realtime alert messages on data-access by others.
    - Add inbuilt App-Lock features.
 
 
-
-
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
 
 ## Screenshots
 <img src="images/login.jpg" width="400" height= "500">     <img src="images/sharingPage.jpg" width="400" height= "500">     <img src="images/filemanager.jpg"  width="400" height= "500">     <img src="images/settings.jpg"  width="400" height= "500">  
