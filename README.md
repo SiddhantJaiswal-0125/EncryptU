@@ -51,10 +51,17 @@ $ cd QuizBuzz
 $ flutter run
 ```
 
-## Built With
+# Tech Stacks
 * [Flutter](https://flutter.dev/) - The hybrid framework used.
 * [Dart](https://dart.dev/) - The language Flutter is written in.
 * [Firebase](https://firebase.google.com) - Cloud NoSQL database
+
+
+- ![](https://img.shields.io/badge/Framework-Android-brown)   
+- ![](https://img.shields.io/badge/SoftwareDevelopmentKit-Flutter-blue)   
+- ![](https://img.shields.io/badge/Languages-grey) ![](https://img.shields.io/badge/Dart-pink) ![](https://img.shields.io/badge/Node.js-green)
+- ![](https://img.shields.io/badge/Database-grey) ![](https://img.shields.io/badge/MongoDB-orange) ![](https://img.shields.io/badge/Firebase-yellow)
+- ![](https://img.shields.io/badge/Backend-grey) ![](https://img.shields.io/badge/RESTAPI's-violet) ![](https://img.shields.io/badge/Express-red) ![](https://img.shields.io/badge/SaltedMD5-navy) ![](https://img.shields.io/badge/JSONWebToken-peach)
 
 # 🔦 Any other specific thing you want to highlight?
 - This idea is completely feasible as of now because the technology stack used is cross platform allowing reach for a larger number of audience
@@ -67,12 +74,6 @@ $ flutter run
    - Add sensor profiling to auto detect accidents and auto emergency response.
 
 
-# Tech Stacks
-- ![](https://img.shields.io/badge/Framework-Android-brown)   
-- ![](https://img.shields.io/badge/SoftwareDevelopmentKit-Flutter-blue)   
-- ![](https://img.shields.io/badge/Languages-grey) ![](https://img.shields.io/badge/Dart-pink) ![](https://img.shields.io/badge/Node.js-green)
-- ![](https://img.shields.io/badge/Database-grey) ![](https://img.shields.io/badge/MongoDB-orange) ![](https://img.shields.io/badge/Firebase-yellow)
-- ![](https://img.shields.io/badge/Backend-grey) ![](https://img.shields.io/badge/RESTAPI's-violet) ![](https://img.shields.io/badge/Express-red) ![](https://img.shields.io/badge/SaltedMD5-navy) ![](https://img.shields.io/badge/JSONWebToken-peach)
 
 
 
