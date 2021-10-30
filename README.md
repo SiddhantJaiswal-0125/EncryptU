@@ -1,4 +1,4 @@
-# EncryptU - Mobile Application
+# EncryptU - Mobile - Web Application
 
 ![](https://img.shields.io/badge/Language-Dart-blue)   
 ![](https://img.shields.io/badge/SDK-Flutter-yellow)   
@@ -19,17 +19,17 @@ The biggest challenge was getting the Oauth to work in Google services and Fireb
 Home Screen
 
 
+1. Login (Phone + OTP ) Screen
 
-1. Quiz Page / Questions page
+2. Sharing Page
 
-2. Results page with Chart
+3. Recieving Page
 
-3. Detailed Report for Quiz took
+4. Files
 
-4. Admin Panel Screen
+5. Profile Page 
 
-# User Authentication / Admin login & Register
-* Google Authentication
+# User Authentication & Registration
 * Mobile OTP (- later version)
 
 
