@@ -47,7 +47,7 @@ This project is a starting point for a Flutter application.
 Clone this repository, with VSCode or Android Studio then download the Flutter tools.
 ```aidl
 $ git clone
-$ cd QuizBuzz
+$ cd EncryptU
 $ flutter run
 ```
 
