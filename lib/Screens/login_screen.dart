@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: downbar,
-        title: Center(child: Text('One GST')),
+        title: Center(child: Text('EncryptU')),
       ),
       body:
           showLoading ? Center(child: CircularProgressIndicator()) : InputBox(),
@@ -203,8 +203,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             InternationalPhoneNumberInput(
               onInputChanged: (PhoneNumber number) {
-
-
                 print("Here " + number.phoneNumber.toString());
                 _phoneNo = number.phoneNumber.toString();
               },

@@ -2,21 +2,20 @@
 
 ![](https://img.shields.io/badge/Language-Dart-blue)   
 ![](https://img.shields.io/badge/SDK-Flutter-yellow)   
-![](https://img.shields.io/badge/Download-QuizBuzz-orange)
+![](https://img.shields.io/badge/Download-EncryptU-orange)
 
 
 ![alt text](http://icons.iconarchive.com/icons/paomedia/small-n-flat/64/star-alt-icon.png) 
 * Star this Repo. if you like the app & support me, this keeps me motivated and keep going for further development
 
-A Mobile Application where the admin can upload questions and can provide pictorial representation too and the required students/candidates can give their test.
-Although the topics can be changed by changing the Firestore data for really any other types of quiz.
+A Mobile +  Web Application where the user can upload its important file very securely and can provide access to limited users who can access the file all around the world through this application.
+It user realtime database to provide a better user experience.
+
 Going with Flutter is a easy choice with its quick development time and fast execution times.
 Firebase as the backend and storage solution makes it very easy to scale and change all the quiz subjects.
 The biggest challenge was getting the Oauth to work in Google services and Firebase login.
 
 # App Screen
-
-Home Screen
 
 
 1. Login (Phone + OTP ) Screen
@@ -70,14 +69,6 @@ $ flutter run
    - Add sensor profiling to auto detect accidents and auto emergency response.
 
 
-
-
-
-# ℹ️ Project information
-- Our Theme : Health
-
-
-
 # 🔥 Our Pitch
 Our application is the one stop solution for sharing files secretly with proper safety.
 It uses advance and very reliable technology as a service provider to provide proper security for the files of the user.
@@ -101,4 +92,4 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 
 ## Screenshots
-<img src="AssetImages/AdminLogin.png" width="250" height= "500">     <img src="AssetImages/UserLogin.png" width="250" height= "500">     <img src="AssetImages/HomePage.png"  width="250" height= "500">     <img src="AssetImages/QuestionAdd.png"  width="250" height= "500">  <img src="AssetImages/QuestionAdd2.png"  width="250" height= "500">   <img src="AssetImages/QuestionPage.png"  width="250" height= "500">     <img src="AssetImages/ResultPage.png" width="250" height= "500">             
+<img src="images/login.jpg" width="250" height= "500">     <img src="images/sharingPage.jpg" width="250" height= "500">     <img src="images/filemanager.jpg"  width="250" height= "500">     <img src="images/settings.jpg"  width="250" height= "500">  
