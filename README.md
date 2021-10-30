@@ -92,4 +92,4 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 
 ## Screenshots
-<img src="images/login.jpg" width="350" height= "500">     <img src="images/sharingPage.jpg" width="350" height= "500">     <img src="images/filemanager.jpg"  width="350" height= "500">     <img src="images/settings.jpg"  width="350" height= "500">  
+<img src="images/login.jpg" width="400" height= "500">     <img src="images/sharingPage.jpg" width="400" height= "500">     <img src="images/filemanager.jpg"  width="400" height= "500">     <img src="images/settings.jpg"  width="400" height= "500">  
