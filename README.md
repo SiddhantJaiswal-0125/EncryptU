@@ -18,15 +18,15 @@ The biggest challenge was getting the Oauth to work in Google services and Fireb
 # App Screen
 
 
-1. Login (Phone + OTP ) Screen
+- Login (Phone + OTP ) Screen
 
-2. Sharing Page
+-  Sharing Page
 
-3. Recieving Page
+- Recieving Page
 
-4. Files
+- Files
 
-5. Profile Page 
+- Profile Page 
 
 # User Authentication & Registration
 * Mobile OTP (- later version)
