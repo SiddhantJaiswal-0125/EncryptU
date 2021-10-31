@@ -151,7 +151,7 @@ class _LoginWebState extends State<LoginWeb> {
                   height: 50,
                   width: 200,
                   decoration: BoxDecoration(
-                      color: Colors.blueAccent,
+                      color: Colors.teal.shade900,
                       borderRadius: BorderRadius.circular(50)),
                   // padding: EdgeInsets.all(10),
                   margin: EdgeInsets.only(left: 30),
@@ -406,24 +406,7 @@ class _LoginWebState extends State<LoginWeb> {
             SizedBox(
               height: 20,
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                  text: "Didn't receive the code? ",
-                  style: TextStyle(color: Colors.black54, fontSize: 15),
-                  children: [
-                    TextSpan(
-                        text: " RESEND",
-                        recognizer: onTapRecognizer,
-                        style: TextStyle(
-                            color: Color(0xFF91D3B3),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16))
-                  ]),
-            ),
-            SizedBox(
-              height: 14,
-            ),
+
             GestureDetector(
               onTap: () {
                 formKey1.currentState!.validate();

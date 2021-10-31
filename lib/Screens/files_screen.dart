@@ -155,17 +155,7 @@ class _FilesScreenState extends State<FilesScreen> {
             ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text(
-                'Approve',
-                style: GoogleFonts.roboto(color: Colors.green, fontSize: 16),
-              ),
-              onPressed: () async {
-                await FirebaseServices().deleteFile(fs.docID);
-                await getFiles();
-                Navigator.of(context).pop();
-              },
-            ),
+
             TextButton(
               child: Text(
                 'Deny',
@@ -175,6 +165,17 @@ class _FilesScreenState extends State<FilesScreen> {
                 // await FirebaseServices().deleteFile(fs.docID);
                 //
                 // await getFiles();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Approve',
+                style: GoogleFonts.roboto(color: Colors.green, fontSize: 16),
+              ),
+              onPressed: () async {
+                await FirebaseServices().deleteFile(fs.docID);
+                await getFiles();
                 Navigator.of(context).pop();
               },
             ),
