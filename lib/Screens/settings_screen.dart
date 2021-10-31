@@ -1,8 +1,10 @@
 import 'package:encryptu/CustomDS/userFirebase.dart';
+import 'package:encryptu/Screens/loginWeb.dart';
 import 'package:encryptu/Screens/login_screen.dart';
 import 'package:encryptu/Utils/firebase_services.dart';
 import 'package:encryptu/Utils/utility.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
@@ -63,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           IconButton(
             onPressed: () async {
               FirebaseAuth.instance.signOut();
-              Navigator.pushReplacementNamed(context, LoginScreen.id);
+              Navigator.pushReplacementNamed(context,kIsWeb?LoginWeb.id:LoginScreen.id);
             },
             icon: Icon(
               Icons.logout,

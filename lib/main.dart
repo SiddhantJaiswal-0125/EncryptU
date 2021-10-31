@@ -1,5 +1,6 @@
 import 'package:encryptu/Screens/files_screen.dart';
 import 'package:encryptu/Screens/home.dart';
+import 'package:encryptu/Screens/loginWeb.dart';
 import 'package:encryptu/Screens/login_screen.dart';
 import 'package:encryptu/Screens/registration_screen.dart';
 import 'package:encryptu/Screens/sharing_screen.dart';
@@ -7,6 +8,7 @@ import 'package:encryptu/Screens/sharing_screen.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -55,7 +57,7 @@ class _MyAppState extends State<MyApp> {
           ? HomeScreen(
               user: user,
             )
-          : LoginScreen(),
+          : (kIsWeb?LoginWeb():LoginScreen()),
       // home: Testing(),
 
       routes: {
@@ -63,6 +65,8 @@ class _MyAppState extends State<MyApp> {
         SharingScreen.id: (context) => SharingScreen(),
         FilesScreen.id: (context) => FilesScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
+        LoginWeb.id: (context) => LoginWeb(),
+
 
       },
     );
