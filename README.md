@@ -9,22 +9,21 @@
 * Star this Repo. if you like the app & support me, this keeps me motivated and keep going for further development
 
 A Mobile +  Web Application where the user can upload its important file very securely and can provide access to limited users who can access the file all around the world through this application.
-It user realtime database to provide a better user experience.
+It uses realtime database to provide a better user experience.
 
 Going with Flutter is a easy choice with its quick development time and fast execution times.
-Firebase as the backend and storage solution makes it very easy to scale and change all the quiz subjects.
-The biggest challenge was getting the Oauth to work in Google services and Firebase login.
+Firebase as the backend and storage solution makes it very easy to scale .
 
 # App Screen
 
 
 - Login (Phone + OTP ) Screen
 
--  Sharing Page
+-  Uploading Page
 
 - Recieving Page
 
-- Files
+- Files Manager Page
 
 - Profile Page 
 
@@ -58,15 +57,7 @@ $ flutter run
 - ![](https://img.shields.io/badge/Database-grey)  ![](https://img.shields.io/badge/Firebase-yellow)
 
 
-# 🔦 Any other specific thing you want to highlight?
-- This idea is completely feasible as of now because the technology stack used is cross platform allowing reach for a larger number of audience
 
-- The backend can be scaled up infinitely to match the scale of audience required to carter using the industry standard technologies like Firebase. 
-- Some of our **Future Aspects**
-
-   - Add Encrpytion profiling for easy assessment of patient by the doctors.
-   - Add an SOS feature to notification panel for quick emergency response from nearby doctors.
-   - Add sensor profiling to auto detect accidents and auto emergency response.
 
 
 # 🔥 Our Pitch
