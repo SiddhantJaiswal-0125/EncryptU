@@ -53,17 +53,18 @@ class FirebaseServices {
     return cds;
   }
 
-  Future<void> encryptFile(
+  Future<bool> encryptFile(
       customDSforFileStorageLink cds, String password) async {
     User? user = await currentUser();
 
     FileStructure fs =
         new FileStructure(cds.url, cds.uniqueId, password, user!.uid, true);
     await _addFileData(fs);
-    return;
+
+    return true;
   }
 
-  Future<void> _addFileData(FileStructure fs) async {
+  Future<bool> _addFileData(FileStructure fs) async {
     print("-----------------INSIDE addFileToFirestore  ---------------");
     // print(userData);
 
@@ -75,28 +76,30 @@ class FirebaseServices {
       'show': true
     };
 
+    bool res = false;
     if (isLoggedIn()) {
       _firestore_instance
           .collection('files')
           .add(data)
           .then(
-            (value) => print(
-              "fille to firestore SUCCESS " + value.toString(),
-            ),
+            (value) {print(
+              "fille to firestore SUCCESS " + value.toString(),);
+                res = true;
+            }
           )
           .catchError((onError) {
+
         print("CAUGHT ERRORR" + onError);
       });
     } else
       print("USER NOT LOGGED IN");
+
+    return res;
   }
 
   //helps to get the data by id
   getFilesById(String id) {
     List<FileStructure> fi = [];
-    // id = "330146681";
-    // 330146681
-
     return _firestore_instance
         .collection('files')
         .where('fileId', isEqualTo: id)
@@ -163,7 +166,7 @@ class FirebaseServices {
     });
   }
 
-  getUserData(String uid) {
+  getUserData1(String uid) {
     List<UserFirebase> fi = [];
     return _firestore_instance
         .collection('user')

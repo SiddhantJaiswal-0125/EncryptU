@@ -35,14 +35,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUser();
+    getUser1();
   }
 
-  getUser() async {
+  getUser1() async {
     FirebaseServices _services = FirebaseServices();
     User? user1 = FirebaseAuth.instance.currentUser;
     if (user1 != null) {
-      userFirebase = await _services.getUserData(user1.uid);
+      userFirebase = await _services.getUserData1(user1.uid);
       setState(() {});
 
       print("USER ID IS " + user1.uid);
@@ -55,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
 
-    getUser();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -391,13 +391,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Spacer(),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.teal,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(width: 2, color: Colors.green)),
                     padding: EdgeInsets.all(8),
                     child: Shimmer.fromColors(
-                      baseColor: Colors.yellowAccent,
-                      highlightColor: Colors.pinkAccent,
+                      baseColor: Colors.teal,
+                      highlightColor: Colors.red,
                       child: Text(
                         'Verified User',
                         textAlign: TextAlign.center,

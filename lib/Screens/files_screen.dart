@@ -34,12 +34,16 @@ class _FilesScreenState extends State<FilesScreen> {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       files = await _services.getFilesByUserId(user.uid);
-      setState(() {});
 
       print("USER ID IS " + user.uid);
 
       print("FILES LENGHT" + files.length.toString());
     }
+    setState(() {
+
+    });
+
+    return;
   }
 
   FileStructure temp = new FileStructure(
@@ -50,6 +54,7 @@ class _FilesScreenState extends State<FilesScreen> {
     // TODO: implement initState
     super.initState();
     getFiles();
+
   }
 
   @override
@@ -148,14 +153,15 @@ class _FilesScreenState extends State<FilesScreen> {
           title: const Text('Are you confirm to delete file ? '),
           content: SingleChildScrollView(
             child: ListBody(
-              children:  <Widget>[
-                Text('File ID : ${fs.uniqueId}', style: GoogleFonts.abel(fontSize: 14),),
-
+              children: <Widget>[
+                Text(
+                  'File ID : ${fs.uniqueId}',
+                  style: GoogleFonts.abel(fontSize: 14),
+                ),
               ],
             ),
           ),
           actions: <Widget>[
-
             TextButton(
               child: Text(
                 'Deny',
