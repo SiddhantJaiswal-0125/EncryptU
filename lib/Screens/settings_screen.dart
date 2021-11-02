@@ -54,8 +54,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -65,7 +63,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           IconButton(
             onPressed: () async {
               FirebaseAuth.instance.signOut();
-              Navigator.pushReplacementNamed(context,kIsWeb?LoginWeb.id:LoginScreen.id);
+              Navigator.pushReplacementNamed(
+                  context, kIsWeb ? LoginWeb.id : LoginScreen.id);
             },
             icon: Icon(
               Icons.logout,
@@ -177,6 +176,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             phoneNo = val;
             print("phone " + phoneNo);
           },
+          maxLength: 10,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.call),
             suffixIcon: IconButton(
@@ -187,6 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             labelText: "Your phone",
             floatingLabelBehavior: FloatingLabelBehavior.always,
             hintText: "+919943241432",
+            hintMaxLines: 10,
             hintStyle: TextStyle(
                 fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
           ),
@@ -328,11 +329,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   'name': name,
                   'phoneNo': phoneNo,
                 };
-             await  FirebaseServices().updateUserData(user!.docId, map);
-
-             setState(() {
-               currentState = ScreenState.NORMAL_SCREEN;
-             });
+                await FirebaseServices().updateUserData(user!.docId, map);
+                getUser1();
+                setState(() {
+                  currentState = ScreenState.NORMAL_SCREEN;
+                });
               },
               padding: EdgeInsets.all(10.0),
               color: Colors.teal.shade900,
