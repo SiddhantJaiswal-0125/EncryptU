@@ -42,9 +42,10 @@ class _SendScreenState extends State<SendScreen> {
           ),
           GestureDetector(
             onTap: () async {
-              if (isuploading) {
+              if (isuploading==false) {
                 File? fi = await FilePickerCustom().pickfiles();
                 if (fi != null) {
+                  print("HERE ontap");
                   isuploading = true;
                   setState(() {});
                   cds = await FirebaseServices().uploadFile(fi);
@@ -54,6 +55,8 @@ class _SendScreenState extends State<SendScreen> {
                 }
               }
             },
+
+
             child: Container(
               width: MediaQuery.of(context).size.width / 2,
               height: 180,
@@ -147,14 +150,20 @@ class _SendScreenState extends State<SendScreen> {
                       text:
                           "Your file is uploaded.\n You can use the Secret Code and Password to Share it",
                       autoCloseDuration: Duration(seconds: 5),
+                      onConfirmBtnTap: () {},
+                      confirmBtnText: "Congrats",
+                      confirmBtnColor: Colors.greenAccent,
                     );
                   } else
                     CoolAlert.show(
-                      context: context,
-                      animType: CoolAlertAnimType.slideInRight,
-                      type: CoolAlertType.error,
-                      text: "Their is something wrong with Device.",
-                      autoCloseDuration: Duration(seconds: 5),
+                        context: context,
+                        animType: CoolAlertAnimType.slideInRight,
+                        type: CoolAlertType.error,
+                        confirmBtnColor: Colors.redAccent,
+                        confirmBtnText: "Please Check",
+                        text: "Their is something wrong with Device.",
+                        autoCloseDuration: Duration(seconds: 5),
+                        onConfirmBtnTap: (){}
                     );
                 }
               },
