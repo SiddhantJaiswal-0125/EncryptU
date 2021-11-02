@@ -66,10 +66,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Navigator.pushReplacementNamed(
                   context, kIsWeb ? LoginWeb.id : LoginScreen.id);
             },
-            icon: Icon(
-              Icons.logout,
-              color: Colors.teal.shade900,
-            ),
+            icon: currentState == ScreenState.NORMAL_SCREEN
+                ? Icon(
+                    Icons.logout,
+                    color: Colors.teal.shade900,
+                  )
+                : Container(),
           )
         ],
         title: Text(

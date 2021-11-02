@@ -42,7 +42,7 @@ class _SendScreenState extends State<SendScreen> {
           ),
           GestureDetector(
             onTap: () async {
-              if (isuploading==false) {
+              if (isuploading == false) {
                 File? fi = await FilePickerCustom().pickfiles();
                 if (fi != null) {
                   print("HERE ontap");
@@ -55,8 +55,6 @@ class _SendScreenState extends State<SendScreen> {
                 }
               }
             },
-
-
             child: Container(
               width: MediaQuery.of(context).size.width / 2,
               height: 180,
@@ -154,6 +152,9 @@ class _SendScreenState extends State<SendScreen> {
                       confirmBtnText: "Congrats",
                       confirmBtnColor: Colors.greenAccent,
                     );
+                    takepassword = false;
+                    cds = null;
+                    setState(() {});
                   } else
                     CoolAlert.show(
                         context: context,
@@ -163,8 +164,7 @@ class _SendScreenState extends State<SendScreen> {
                         confirmBtnText: "Please Check",
                         text: "Their is something wrong with Device.",
                         autoCloseDuration: Duration(seconds: 5),
-                        onConfirmBtnTap: (){}
-                    );
+                        onConfirmBtnTap: () {});
                 }
               },
               child: Text(
