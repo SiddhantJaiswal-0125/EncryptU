@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "658030259651",
+    "project_id": "fir-encryption-f5319",
+    "storage_bucket": "fir-encryption-f5319.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658030259651:android:efe911aca1fbd12622a176",
+        "android_client_info": {
+          "package_name": "com.example.firebaseencrytion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRvxXuJu5il2dVnSu55weJXPwRrf6_VNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
