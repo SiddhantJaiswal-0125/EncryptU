@@ -45,6 +45,9 @@ dependencies:
   flutter_otp_text_field:
   intl_phone_number_input:
   shimmer:
+  url_launcher:
+  pin_code_fields:
+  cool_alert:
 dev_dependencies:
   flutter_test:
     sdk: flutter

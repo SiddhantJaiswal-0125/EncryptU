@@ -1,4 +1,4 @@
-// import 'package:encryptu/Screens/home.dart';
+import 'package:firebaseencrytion/Screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -34,18 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final authCredential =
-      await _auth.signInWithCredential(phoneAuthCredential);
+          await _auth.signInWithCredential(phoneAuthCredential);
       setState(() {
         showLoading = false;
 
         if (authCredential.user != null) {
-          //TODO: ADD NAVIGATION towards the home page
-
-          // Navigator.pushReplacement(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (context) =>
-          //             HomeScreen(user: authCredential.user!)));
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      HomeScreen(user: authCredential.user!)));
         }
       });
     } on FirebaseAuthException catch (e) {
@@ -121,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
           // textColor: Colors.white,
           onPressed: () async {
             PhoneAuthCredential phoneAuthCredential =
-            PhoneAuthProvider.credential(
-                verificationId: verificationID, smsCode: _otp_code);
+                PhoneAuthProvider.credential(
+                    verificationId: verificationID, smsCode: _otp_code);
             SignInWithPhoneAuthCredential(phoneAuthCredential);
           },
           child: Text('Verify'),
@@ -142,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Center(child: Text('EncryptU')),
       ),
       body:
-      showLoading ? Center(child: CircularProgressIndicator()) : InputBox(),
+          showLoading ? Center(child: CircularProgressIndicator()) : InputBox(),
     );
   }
 
@@ -160,9 +158,9 @@ class _LoginScreenState extends State<LoginScreen> {
           Container(
             padding: EdgeInsets.all(20),
             child:
-            currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
-                ? phoneInput(context)
-                : input1(context),
+                currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
+                    ? phoneInput(context)
+                    : input1(context),
           ),
         ],
       ),
@@ -223,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
               formatInput: false,
               maxLength: 10,
               keyboardType:
-              TextInputType.numberWithOptions(signed: true, decimal: true),
+                  TextInputType.numberWithOptions(signed: true, decimal: true),
               inputBorder: OutlineInputBorder(),
               onSaved: (PhoneNumber number) {
                 print('On Saved: $number');
@@ -242,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 });
 
                 await _auth.verifyPhoneNumber(
-                  // timeout: Duration(seconds: 25),
+                    // timeout: Duration(seconds: 25),
                     phoneNumber: _phoneNo,
                     verificationCompleted: (phoneAuthCredential) async {
                       setState(() {
@@ -305,7 +303,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void getPhoneNumber(String phoneNumber) async {
     PhoneNumber number =
-    await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'IN');
+        await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'IN');
 
     setState(() {
       this.number = number;
