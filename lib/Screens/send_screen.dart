@@ -12,6 +12,8 @@ import 'package:firebaseencrytion/Utils/storage_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Utils/firebase_services.dart';
+
 class SendScreen extends StatefulWidget {
   @override
   _SendScreenState createState() => _SendScreenState();
@@ -40,18 +42,6 @@ class _SendScreenState extends State<SendScreen> {
 
 
 
-  // Future<void> _launchPdf(List<int> bytes, String fileName) async {
-  //   //Get the external storage directory
-  //   Directory directory = await getExternalStorageDirectory();
-  //   //Get the directory path
-  //   String path = directory.path;
-  //   //Create an empty file to write the PDF data
-  //   File file = File('$path/$fileName');
-  //   //Write the PDF data
-  //   await file.writeAsBytes(bytes, flush: true);
-  //   //Open the PDF document in mobile
-  //   OpenFile.open('$path/$fileName');
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +57,13 @@ class _SendScreenState extends State<SendScreen> {
           GestureDetector(
             onTap: () async {
               if (isuploading == false) {
-                // File? fi = await FilePickerCustom().pickfiles();
-                Uint8List? fi = await FilePickerCustom().pickfilesfromWeb();
+                File? fi = await FilePickerCustom().pickfiles();
+                // Uint8List? fi = await FilePickerCustom().pickfilesfromWeb();
                 if (fi != null) {
                   isuploading = true;
                   setState(() {});
-                  //TODO:CONFIGURE THE UPLOADING AT FIREBASE
-                  // cds = await FirebaseServices().uploadFile(fi);
+
+                  cds = await FirebaseServices().uploadFile(fi);
                   isuploading = false;
                   takepassword = true;
                   setState(() {});
@@ -166,41 +156,41 @@ class _SendScreenState extends State<SendScreen> {
           SizedBox(
             height: 20,
           ),
-          // FlatButton(
-          //     color: takepassword ? Colors.teal.shade900 : Colors.grey,
-          //     onPressed: () async {
-          //       if (cds != null) {
-          //         if (await FirebaseServices().encryptFile(cds!, password)) {
-          //           CoolAlert.show(
-          //             context: context,
-          //             animType: CoolAlertAnimType.slideInRight,
-          //             type: CoolAlertType.success,
-          //             text:
-          //                 "Your file is uploaded.\n You can use the Secret Code and Password to Share it",
-          //             autoCloseDuration: Duration(seconds: 5),
-          //             onConfirmBtnTap: () {},
-          //             confirmBtnText: "Congrats",
-          //             confirmBtnColor: Colors.greenAccent,
-          //           );
-          //           takepassword = false;
-          //           cds = null;
-          //           setState(() {});
-          //         } else
-          //           CoolAlert.show(
-          //               context: context,
-          //               animType: CoolAlertAnimType.slideInRight,
-          //               type: CoolAlertType.error,
-          //               confirmBtnColor: Colors.redAccent,
-          //               confirmBtnText: "Please Check",
-          //               text: "Their is something wrong with Device.",
-          //               autoCloseDuration: Duration(seconds: 5),
-          //               onConfirmBtnTap: () {});
-          //       }
-          //     },
-          //     child: Text(
-          //       "Upload Your File",
-          //       style: GoogleFonts.roboto(fontSize: 18, color: Colors.white),
-          //     ))
+          FloatingActionButton(
+              // color: takepassword ? Colors.teal.shade900 : Colors.grey,
+              onPressed: () async {
+                if (cds != null) {
+                  if (await FirebaseServices().encryptFile(cds!, password)) {
+                    CoolAlert.show(
+                      context: context,
+                      animType: CoolAlertAnimType.slideInRight,
+                      type: CoolAlertType.success,
+                      text:
+                          "Your file is uploaded.\n You can use the Secret Code and Password to Share it",
+                      autoCloseDuration: Duration(seconds: 5),
+                      onConfirmBtnTap: () {},
+                      confirmBtnText: "Congrats",
+                      confirmBtnColor: Colors.greenAccent,
+                    );
+                    takepassword = false;
+                    cds = null;
+                    setState(() {});
+                  } else
+                    CoolAlert.show(
+                        context: context,
+                        animType: CoolAlertAnimType.slideInRight,
+                        type: CoolAlertType.error,
+                        confirmBtnColor: Colors.redAccent,
+                        confirmBtnText: "Please Check",
+                        text: "Their is something wrong with Device.",
+                        autoCloseDuration: Duration(seconds: 5),
+                        onConfirmBtnTap: () {});
+                }
+              },
+              child: Text(
+                "Upload Your File",
+                style: GoogleFonts.roboto(fontSize: 18, color: Colors.white),
+              ))
         ],
       ),
     );

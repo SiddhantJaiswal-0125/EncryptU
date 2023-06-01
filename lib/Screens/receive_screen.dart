@@ -2,7 +2,7 @@ import 'package:firebaseencrytion/CustomDS/fileDS.dart';
 import 'package:firebaseencrytion/Utils/firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class RecieveScreen extends StatefulWidget {
   @override
@@ -161,15 +161,15 @@ class _RecieveScreenState extends State<RecieveScreen> {
   }
 
   Future<void> _launchInBrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: false,
-        forceWebView: false,
-        headers: <String, String>{'my_header_key': 'my_header_value'},
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
+    // if (await canLaunch(url)) {
+    //   await launch(
+    //     url,
+    //     forceSafariVC: false,
+    //     forceWebView: false,
+    //     headers: <String, String>{'my_header_key': 'my_header_value'},
+    //   );
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
   }
 }
