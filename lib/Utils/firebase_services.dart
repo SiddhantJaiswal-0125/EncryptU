@@ -6,6 +6,7 @@ import 'package:firebaseencrytion/CustomDS/fileDS.dart';
 import 'package:firebaseencrytion/CustomDS/filesFirebase.dart';
 import 'package:firebaseencrytion/CustomDS/userDS.dart';
 import 'package:firebaseencrytion/CustomDS/userFirebase.dart';
+import 'package:firebaseencrytion/Utils/Utility.dart';
 import 'package:firebaseencrytion/Utils/storage_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -168,6 +169,7 @@ class FirebaseServices {
   }
 
   getUserData1(String uid) {
+    Utility.customlogger("getUserData1() ------- > UID : $uid");
     List<UserFirebase> fi = [];
     return _firestore_instance
         .collection('user')
@@ -175,22 +177,39 @@ class FirebaseServices {
         .get()
         .then((QuerySnapshot querySnapshot) {
       if (querySnapshot != null) {
+
+        Utility.customlogger("QuerySnapshot is not null");
         querySnapshot.docs.forEach((doc) {
-          UserFirebase f;
-          print("PRINTING");
-          print("USER NAME " + doc['name']);
-          String name = doc['name'];
-          String email = doc['email'];
-          String phone = doc['phoneNo'];
-          String profile = doc['profile'];
-          String address = doc['address'];
-          String gender = doc['gender'];
+          // UserFirebase f;
+          print(doc == null ? "DOC IS NULL ": "DOC is not null");
+          print(doc.runtimeType);
+          print("DOC DATA TYPE : ${doc.data().runtimeType}");
+
+          Map mp = doc.data() as Map;
+          Utility.customlogger("PRINTING USER MAP ");
+          print(mp.keys);
+
+          Utility.customlogger(mp['name']);
+          Utility.customlogger(mp['uid']);
+          Utility.customlogger(mp['address']);
+          Utility.customlogger(mp['gender']);
+          Utility.customlogger(mp['profile']);
+          Utility.customlogger(mp['phoneNo']);
+          Utility.customlogger(mp['email']);
+
+          // Utility.customlogger("USER NAME ${doc.data()['name']}");
+          // print("USER NAME " + doc['name']);
+          String name = mp['name'];
+          String email = mp['email'];
+          String phone = mp['phoneNo'];
+          String profile = mp['profile'];
+          String address = mp['address'];
+          String gender = mp['gender'];
           String docId = doc.id;
 
-          print("DOC ID IS  : ${docId}");
-
-          // f = new FirebaseFileStructure(url, id, password, fileId, show, docId);
-         f = new UserFirebase(name: name, photoUrl: profile, phoneNumber: phone, emailId: email, address: address, docId: docId, gender: gender);
+        Utility.customlogger("DOC ID IS  : ${doc.id}");
+        //   // f = new FirebaseFileStructure(url, id, password, fileId, show, docId);
+           UserFirebase f = new UserFirebase(name: name, photoUrl: profile, phoneNumber: phone, emailId: email, address: address, docId: docId, gender: gender);
           fi.add(f);
         });
 

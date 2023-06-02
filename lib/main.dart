@@ -2,6 +2,7 @@ import 'package:firebaseencrytion/Screens/files_screen.dart';
 import 'package:firebaseencrytion/Screens/home.dart';
 import 'package:firebaseencrytion/Screens/loginWeb.dart';
 import 'package:firebaseencrytion/Screens/login_screen.dart';
+import 'package:firebaseencrytion/Screens/logincpy.dart';
 import 'package:firebaseencrytion/Screens/registration_screen.dart';
 import 'package:firebaseencrytion/Screens/sharing_screen.dart';
 import 'package:firebaseencrytion/Utils/Utility.dart';
@@ -44,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     bool check = false;
     if (_auth.currentUser == null) {
       check = false;
-      Utility.customlogger("NOT LOGGED IN");
+      Utility.customlogger("Not able to find last logged in-user");
       setState(() {});
     } else {
       check = true;
@@ -60,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         user: user,
       )
           : (kIsWeb?LoginWeb():LoginScreen()),
-      // home: Testing(),
+      // home: lgnscr2(),
 
       routes: {
         LoginScreen.id: (context) => LoginScreen(),

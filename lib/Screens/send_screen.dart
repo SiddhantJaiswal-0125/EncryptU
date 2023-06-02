@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-// import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cool_alert/cool_alert.dart';
 
@@ -66,6 +64,7 @@ class _SendScreenState extends State<SendScreen> {
                   cds = await FirebaseServices().uploadFile(fi);
                   isuploading = false;
                   takepassword = true;
+                  Utility.customlogger("TAKE PASSWORD ${takepassword}");
                   setState(() {});
                 }
                 else
@@ -156,41 +155,49 @@ class _SendScreenState extends State<SendScreen> {
           SizedBox(
             height: 20,
           ),
-          FloatingActionButton(
-              // color: takepassword ? Colors.teal.shade900 : Colors.grey,
-              onPressed: () async {
-                if (cds != null) {
-                  if (await FirebaseServices().encryptFile(cds!, password)) {
-                    CoolAlert.show(
+
+
+
+          GestureDetector(
+            onTap: () async {
+              if (cds != null) {
+                if (await FirebaseServices().encryptFile(cds!, password)) {
+                  CoolAlert.show(
+                    context: context,
+                    animType: CoolAlertAnimType.slideInRight,
+                    type: CoolAlertType.success,
+                    text:
+                    "Your file is uploaded.\n You can use the Secret Code and Password to Share it",
+                    autoCloseDuration: Duration(seconds: 5),
+                    onConfirmBtnTap: () {},
+                    confirmBtnText: "Congrats",
+                    confirmBtnColor: Colors.greenAccent,
+                  );
+                  takepassword = false;
+                  cds = null;
+                  setState(() {});
+                } else
+                  CoolAlert.show(
                       context: context,
                       animType: CoolAlertAnimType.slideInRight,
-                      type: CoolAlertType.success,
-                      text:
-                          "Your file is uploaded.\n You can use the Secret Code and Password to Share it",
+                      type: CoolAlertType.error,
+                      confirmBtnColor: Colors.redAccent,
+                      confirmBtnText: "Please Check",
+                      text: "Their is something wrong with Device.",
                       autoCloseDuration: Duration(seconds: 5),
-                      onConfirmBtnTap: () {},
-                      confirmBtnText: "Congrats",
-                      confirmBtnColor: Colors.greenAccent,
-                    );
-                    takepassword = false;
-                    cds = null;
-                    setState(() {});
-                  } else
-                    CoolAlert.show(
-                        context: context,
-                        animType: CoolAlertAnimType.slideInRight,
-                        type: CoolAlertType.error,
-                        confirmBtnColor: Colors.redAccent,
-                        confirmBtnText: "Please Check",
-                        text: "Their is something wrong with Device.",
-                        autoCloseDuration: Duration(seconds: 5),
-                        onConfirmBtnTap: () {});
-                }
-              },
-              child: Text(
-                "Upload Your File",
-                style: GoogleFonts.roboto(fontSize: 18, color: Colors.white),
-              ))
+                      onConfirmBtnTap: () {});
+              }
+            },
+            child: Card(
+              color: takepassword ? Colors.teal.shade900 : Colors.grey,
+               child: Container(
+                 padding: EdgeInsets.all(5),
+                    color: Colors.white54,
+                    child: Text("Upload your file", style: GoogleFonts.roboto(fontSize: 18, color: Colors.black),),
+               ),
+             ),
+          )
+
         ],
       ),
     );

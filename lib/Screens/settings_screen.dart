@@ -42,14 +42,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
     FirebaseServices _services = FirebaseServices();
     User? user1 = FirebaseAuth.instance.currentUser;
     if (user1 != null) {
+      Utility.customlogger("at getuser1() --- USER is not null");
       userFirebase = await _services.getUserData1(user1.uid);
+
+      print("------------------USERFIREBASE in getuser1() ------ settings_screen.dart");
+      if( userFirebase == null|| userFirebase.length == 0) {
+        Utility.customlogger("List of User details is empty ");
+        return;
+      }
+
       setState(() {});
-
-      print("USER ID IS " + user1.uid);
-
-      print("FILES LENGHT" + userFirebase.length.toString());
+      Utility.customlogger("USER ID : ${user1.uid}");
+      Utility.customlogger("NUMBER OF User Retrive ${userFirebase.length.toString()}");
       user = userFirebase[0];
     }
+    else
+      Utility.customlogger("AT getuser1() and user is null");
   }
 
   @override
@@ -331,6 +339,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   'name': name,
                   'phoneNo': phoneNo,
                 };
+
+                if(user ==null)
+                  Utility.customlogger("USER IS NULL");
+
+                Utility.customlogger("USER DOC ID ");
+                Utility.customlogger("Name : ${name}");
+                Utility.customlogger("Email : ${email}");
+                Utility.customlogger("Gender :  ${selected}");
+                Utility.customlogger("phoneNo {$phoneNo}");
+
+                Utility.customlogger("address : $address");
+
                 await FirebaseServices().updateUserData(user!.docId, map);
                 getUser1();
                 setState(() {
