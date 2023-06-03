@@ -21,6 +21,7 @@ class FilePickerCustom
       File file = File(path!);
       return file;
     }
+    Utility.customlogger("Picked file is null : at pickfiles() at file_picker.dart");
     return null;
   }
 
@@ -54,7 +55,6 @@ class FilePickerCustom
   ///FUNCTION UPLOAD the file to the storage
   Future<void> uploadFile(Uint8List _data, String extension) async {
 
-
     Utility.customlogger("Inside upload file || file_picker.dart");
     ///Start uploading
     firebase_storage.Reference reference = firebase_storage
@@ -62,14 +62,14 @@ class FilePickerCustom
         .ref('docs/namefile.$extension');
 
     Utility.customlogger("Storage Reference Created");
-    print(reference);
+    Utility.customlogger(reference.toString());
 
     ///Show the status of the upload
     firebase_storage.TaskSnapshot uploadTask = await reference.putData(_data);
 
     ///Get the download url of the file
     String url = await uploadTask.ref.getDownloadURL().then((value){
-      Utility.customlogger(value);
+      Utility.customlogger("URL at uploadfile : $value");
       return value;
     });
 

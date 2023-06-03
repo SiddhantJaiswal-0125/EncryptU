@@ -56,11 +56,12 @@ class _SendScreenState extends State<SendScreen> {
             onTap: () async {
               if (isuploading == false) {
                 File? fi = await FilePickerCustom().pickfiles();
-                // Uint8List? fi = await FilePickerCustom().pickfilesfromWeb();
+
+                Utility.customlogger(fi == null ? "Picked file is null at send_screen.dart":"Picked file is not null at send_screen.dart");
+
                 if (fi != null) {
                   isuploading = true;
                   setState(() {});
-
                   cds = await FirebaseServices().uploadFile(fi);
                   isuploading = false;
                   takepassword = true;

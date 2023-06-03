@@ -2,7 +2,6 @@ import 'package:firebaseencrytion/Screens/files_screen.dart';
 import 'package:firebaseencrytion/Screens/home.dart';
 import 'package:firebaseencrytion/Screens/loginWeb.dart';
 import 'package:firebaseencrytion/Screens/login_screen.dart';
-import 'package:firebaseencrytion/Screens/logincpy.dart';
 import 'package:firebaseencrytion/Screens/registration_screen.dart';
 import 'package:firebaseencrytion/Screens/sharing_screen.dart';
 import 'package:firebaseencrytion/Utils/Utility.dart';
@@ -12,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         user: user,
       )
           : (kIsWeb?LoginWeb():LoginScreen()),
-      // home: lgnscr2(),
+
 
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
