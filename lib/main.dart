@@ -12,6 +12,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'Utils/test.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,12 +58,12 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: check
-          ? HomeScreen(
-        user: user,
-      )
-          : (kIsWeb?LoginWeb():LoginScreen()),
-
+      // home: check
+      //     ? HomeScreen(
+      //   user: user,
+      // )
+      //     : (kIsWeb?LoginWeb():LoginScreen()),
+  home: DocumentScreen(),
 
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
