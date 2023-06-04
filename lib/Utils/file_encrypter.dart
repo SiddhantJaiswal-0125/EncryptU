@@ -19,6 +19,8 @@ class FileEcryptionApi {
 
     final encryptedFile = encrypter.encryptBytes(data, iv: iv);
 
+    encrypter.decryptBytes(encryptedFile, iv: iv);
+
     keyDataStructure kds  = keyDataStructure(encryptedFile.bytes, key.base64, iv.base64);
     return kds;
   }

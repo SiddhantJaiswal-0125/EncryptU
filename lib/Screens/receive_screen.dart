@@ -1,4 +1,6 @@
 import 'package:firebaseencrytion/CustomDS/fileDS.dart';
+import 'package:firebaseencrytion/Screens/PdfViewer.dart';
+import 'package:firebaseencrytion/Utils/Utility.dart';
 import 'package:firebaseencrytion/Utils/firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -122,8 +124,14 @@ class _RecieveScreenState extends State<RecieveScreen> {
 
                 passwordIncorrect = false;
 
-
-                _launchInBrowser(fi[0].url);
+                Utility.customlogger("URL AFTER SAME PASSWORD ${fi[0].url}");
+                // _launchInBrowser(fi[0].url);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PdfViewerPage(url: fi[0].url),
+                  ),
+                );
               } else {
                 print("DIFFERENT PASSWORD");
                 passwordIncorrect = true;
