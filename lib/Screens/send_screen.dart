@@ -11,6 +11,7 @@ import 'package:firebaseencrytion/Utils/Utility.dart';
 import 'package:firebaseencrytion/Utils/storage_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 
 import '../Utils/file_encrypter.dart';
 import '../Utils/firebase_services.dart';
@@ -204,23 +205,23 @@ class _SendScreenState extends State<SendScreen> {
                                 doc!.readAsBytesSync(),
                                 key); //Changing the file into a list of bytes
 
-                            await FileSaver
+                          String newFilePath =  await FileSaver
                                 .instance //Saving the encrypted document to local storage
                                 .saveAs(fileName, kds!.data, "aes",
-                                    MimeType.OTHER)
-                                .whenComplete(
-                              () {
-                                setState(
+                                    MimeType.OTHER);
+
+
+                          Utility.customlogger("NEW FILE PATH $newFilePath");
+
+                            setState(
                                   () {
-                                    isEncrypting = false;
-                                  },
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Successfully encrypted !! "),
-                                  ),
-                                );
+                                isEncrypting = false;
                               },
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Successfully encrypted !! "),
+                              ),
                             );
                           },
                           child: isEncrypting
@@ -283,7 +284,7 @@ class _SendScreenState extends State<SendScreen> {
                             isUploading = true;
                           });
                           customDSforFileStorageLink? cds =
-                              await uploadDocument();
+                              await uploadDocument(doc);
                           setState(() {
                             isUploading = false;
                           });
@@ -310,7 +311,7 @@ class _SendScreenState extends State<SendScreen> {
                               );
                               takepassword = false;
                               cds = null;
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                              // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
 
                             } else {
                               // ignore: use_build_context_synchronously
@@ -348,15 +349,15 @@ class _SendScreenState extends State<SendScreen> {
     );
   }
 
-  Future<customDSforFileStorageLink?> uploadDocument() async {
+  Future<customDSforFileStorageLink?> uploadDocument(uploadingdata) async {
     // Function to upload the picked document to Firebase
-    if (doc == null) return null;
-    var filePath = doc!.path;
+    if (uploadingdata == null) return null;
+    var filePath = uploadingdata!.path;
     var fileName = (filePath.split('/').last);
     final destination = "files/documents/$fileName";
 
     customDSforFileStorageLink? cdsLink =
-        await FirebaseApi.uploadFile(destination, doc!);
+        await FirebaseApi.uploadFile(destination, uploadingdata!);
 
     Utility.customlogger(
         "GOT THE CDS LINK at uploadDocument() at send_screen.dart");

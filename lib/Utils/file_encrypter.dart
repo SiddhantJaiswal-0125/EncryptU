@@ -5,6 +5,7 @@ import 'package:encrypt/encrypt.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:firebaseencrytion/Utils/Utility.dart';
 
+import 'package:path_provider/path_provider.dart';
 class FileEcryptionApi {
   static Future<keyDataStructure?> encryptFile(data, key1) async {
     Key key = Key.fromSecureRandom(16);
@@ -19,7 +20,6 @@ class FileEcryptionApi {
 
     final encryptedFile = encrypter.encryptBytes(data, iv: iv);
 
-    encrypter.decryptBytes(encryptedFile, iv: iv);
 
     keyDataStructure kds  = keyDataStructure(encryptedFile.bytes, key.base64, iv.base64);
     return kds;
@@ -37,6 +37,20 @@ class FileEcryptionApi {
       isEncrypting = false;
 
     });
+  }
+
+
+  static Future<File> decrypter( file, String key1,String  iv1) async
+  {
+
+    Key key = Key.fromBase64(key1);
+    IV iv = IV.fromBase64(iv1);
+    final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+    List<int> decryptededdata =  encrypter.decryptBytes(file, iv: iv);
+    final dir = await getApplicationDocumentsDirectory();
+    var file2 = File('${dir.path}/testing.pdf');
+    await file2.writeAsBytes(decryptededdata, flush: true);
+   return  file2;
   }
 }
 class keyDataStructure
