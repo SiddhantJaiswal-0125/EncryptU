@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebaseencrytion/Utils/Utility.dart';
+import 'package:firebaseencrytion/Utils/storage_services.dart';
 import 'package:flutter/material.dart';
 
 import 'file_encrypter.dart';
@@ -67,20 +70,27 @@ class _DocumentScreenState extends State<DocumentScreen> {
                             });
                             final result =
                             await FileEcryptionApi.encryptFile(
-                                doc!.readAsBytesSync()); //Changing the file into a list of bytes
+                                doc!.readAsBytesSync(),14
+                            ); //Changing the file into a list of bytes
 
                             await FileSaver.instance //Saving the encrypted document to local storage
-                                .saveAs(fileName, result!, "aes",
+                                .saveAs(fileName, result!.data, "aes",
                                 MimeType.OTHER)
-                                .whenComplete(() {
-                              setState(() {
+                                .whenComplete( () {
+                              setState(
+                                    () {
                                 isEncrypting = false;
-                              });
+                              },
+                              );
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text(
-                                          "Successfully encrypted!")));
-                            });
+                                          "Successfully encrypted !! "
+                                      ),
+                                  ),
+                              );
+                            },
+                            );
                           },
                           child: isEncrypting
                               ? const Text("Encrypting...")
@@ -120,15 +130,26 @@ class _DocumentScreenState extends State<DocumentScreen> {
     var fileName = (filePath.split('/').last);
     final destination = "files/documents/$fileName";
 
-    await FirebaseApi.uploadFile(destination, doc!);
+   await FirebaseApi.uploadFile(destination, doc!) ;
+   Utility.customlogger("Upload Task Done :: at uplaodDocument() ");
+
   }
 }
 class FirebaseApi {
-  static UploadTask? uploadFile(String destination, File file) {
+  static Future<customDSforFileStorageLink?> uploadFile(String destination, File file) async {
     try {
+      customDSforFileStorageLink cs;
       final storageRef = FirebaseStorage.instance.ref(destination); //Here the destination of the file is passed.
-
-      return storageRef.putFile(file); // The file to be uploaded is passed.
+      final metadata = firebase_storage.SettableMetadata(
+        contentType: 'application/pdf',
+      );
+      firebase_storage.TaskSnapshot task = await storageRef.putFile(file,metadata);
+   String url =  await storageRef.getDownloadURL() ;
+    Utility.customlogger("URL IS : $url");
+    String id = task.ref.hashCode.toString();
+    Utility.customlogger("HASHCODE is $id");
+    cs = new customDSforFileStorageLink(url, id);
+    return cs;
     } on FirebaseException catch (e) {
       return null; // If any errors occur uploading is cancelled.
     }

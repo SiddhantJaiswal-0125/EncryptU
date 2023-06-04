@@ -58,12 +58,12 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: check
-      //     ? HomeScreen(
-      //   user: user,
-      // )
-      //     : (kIsWeb?LoginWeb():LoginScreen()),
-  home: DocumentScreen(),
+      home: check
+          ? HomeScreen(
+        user: user,
+      )
+          : (kIsWeb?LoginWeb():LoginScreen()),
+  // home: DocumentScreen(),
 
       routes: {
         LoginScreen.id: (context) => LoginScreen(),

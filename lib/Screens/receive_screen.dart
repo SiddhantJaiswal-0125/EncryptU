@@ -122,6 +122,7 @@ class _RecieveScreenState extends State<RecieveScreen> {
 
                 passwordIncorrect = false;
 
+
                 _launchInBrowser(fi[0].url);
               } else {
                 print("DIFFERENT PASSWORD");

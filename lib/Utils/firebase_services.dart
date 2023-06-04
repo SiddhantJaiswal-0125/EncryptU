@@ -10,6 +10,8 @@ import 'package:firebaseencrytion/Utils/Utility.dart';
 import 'package:firebaseencrytion/Utils/storage_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'file_encrypter.dart';
+
 class FirebaseServices {
   static var _firestore_instance = FirebaseFirestore.instance;
 
@@ -56,17 +58,17 @@ class FirebaseServices {
   }
 
   Future<bool> encryptFile(
-      customDSforFileStorageLink cds, String password) async {
+      customDSforFileStorageLink cds, String password, keyDataStructure kds ) async {
     User? user = await currentUser();
 
     FileStructure fs =
         new FileStructure(cds.url, cds.uniqueId, password, user!.uid, true);
-    await _addFileData(fs);
+    await _addFileData(fs, kds);
 
     return true;
   }
 
-  Future<bool> _addFileData(FileStructure fs) async {
+  Future<bool> _addFileData(FileStructure fs, keyDataStructure kds) async {
     print("-----------------INSIDE addFileToFirestore  ---------------");
     // print(userData);
 
@@ -75,7 +77,9 @@ class FirebaseServices {
       'fileURL': fs.url.toString(),
       'owner': fs.ownerId.toString(),
       'password': fs.password.toString(),
-      'show': true
+      'show': true,
+      'key':kds.key,
+      'iv':kds.iv
     };
 
     bool res = false;
