@@ -79,4 +79,4 @@ It uses advance and very reliable technology as a service provider to provide pr
 
 
 ## Screenshots
-<img src="images/login.jpg" width="400" height= "500">     <img src="images/sharing1.jpg" width="400" height= "500">   <img src="images/encrypter.jpg" width="400" height= "500">   <img src="images/getfile.jpg"  width="400" height= "500">     <img src="images/filemanager.jpg"  width="400" height= "500">     <img src="images/settings.jpg"  width="400" height= "500">  
+<img src="images/login.jpg" width="400" height= "500">     <img src="images/sharing1.png" width="400" height= "500">   <img src="images/encrypter.png" width="400" height= "500">   <img src="images/getfile.png"  width="400" height= "500">     <img src="images/filemanager.jpg"  width="400" height= "500">     <img src="images/settings.jpg"  width="400" height= "500">  
